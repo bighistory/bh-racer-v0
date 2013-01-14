@@ -1,7 +1,5 @@
 
 /****************************************/
-        { position: absolute; z-index: 2; width: 640px; padding: 3px 0; font-family: Verdana, Geneva, sans-serif; font-size: 0.8em; background-color: rgba(0,0,0,0.4); color: black; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }/* common styles used for v1 through v4 */
-/****************************************/
 
 body          { font-family: Arial, Helvetica, sans-serif; }
 #stats        { border: 2px solid black; }

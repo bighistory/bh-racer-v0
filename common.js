@@ -336,6 +336,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
         });
     },
 
+/*
     setCanvasListener:function (canvasFrame) {
         var doTouchStart = function (event) {
             event.preventDefault();
@@ -362,7 +363,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
         //canvas.addEventListener("touchend", doTouchEnd, false);
 
     },
-
+*/
     //---------------------------------------------------------------------------
 
     stats:function (parentId, id) { // construct mr.doobs FPS counter - along with friendly good/bad/ok message box
@@ -517,7 +518,7 @@ var Render = {
 
     //---------------------------------------------------------------------------
 
-    timeMarker:function (ctx, width, lanes, x1, y1, w1, clipY, scale, timeMarker) {
+    timeMarker:function (ctx, width, lanes, x1, y1, w1, clipY, scale, color, timeMarker) {
 
         // don't really want to have to recalc r1 (already did it for segment), maybe figure out a way to save
         var fontsize = Math.round(scale * 300000);
@@ -525,7 +526,7 @@ var Render = {
             var r1 = Math.round(Render.rumbleWidth(w1, lanes));
             //console.log(fontsize, x1+w1+r1, y1, clipY);
             ctx.save();
-            ctx.fillStyle = '#fff';
+            ctx.fillStyle = color;
             ctx.font = fontsize + "px sans-serif"
             ctx.fillText(timeMarker, x1 + w1 + r1, y1);
             ctx.restore();

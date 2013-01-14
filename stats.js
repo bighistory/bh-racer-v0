@@ -103,14 +103,14 @@ var Stats = function () {
     end: function () {
 
       var time = Date.now();
-
+/*
       ms = time - startTime;
       msMin = Math.min( msMin, ms );
       msMax = Math.max( msMax, ms );
 
       msText.textContent = ms + ' MS (' + msMin + '-' + msMax + ')';
       updateGraph( msGraph, Math.min( 30, 30 - ( ms / 200 ) * 30 ) );
-
+*/
       frames ++;
 
       if ( time > prevTime + 1000 ) {

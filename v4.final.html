@@ -12,7 +12,8 @@
 
 <table id="controls">
     <tr>
-        <td id="fps" colspan="2" align="right"></td>
+        <!--td id="fps" colspan="2" align="right"></td-->
+        <td id="fps" colspan="2"></td>
     </tr>
     <tr>
         <th><label for="resolution">Resolution :</label></th>
@@ -43,7 +44,7 @@
         </td>
     </tr>
     <tr>
-        <th><label for="autoSteer">Autodrive :</label></th>
+        <th><label for="autoSteer">Auto Accelerate :</label></th>
         <td>
             <input type="checkbox" id="autoSteer">
         </td>
@@ -124,18 +125,20 @@ var width = 1024;                    // logical canvas width
 var height = 768;                     // logical canvas height
 var centrifugal = 0.15;                     // centrifugal force multiplier when going around curves
 //var offRoadDecel = 0.99;                    // speed multiplier when off road (e.g. you lose 2% speed each update frame)
-var skySpeed = 0.0005;                   // background sky layer scroll speed when going around curve (or up hill)
-var hillSpeed = 0.0009;                   // background hill layer scroll speed when going around curve (or up hill)
-var treeSpeed = 0.0011;                   // background tree layer scroll speed when going around curve (or up hill)
-var galaxySpeed = 0.0003;                   // background galaxy layer scroll speed when going around curve (or up hill)
-var skyOffset = 0;                       // current sky scroll offset
-var hillOffset = 0;                       // current hill scroll offset
-var treeOffset = 0;                       // current tree scroll offset
-var galaxyOffset = 0;                       // current galaxy scroll offset
+//var skySpeed = 0.0005;                   // background sky layer scroll speed when going around curve (or up hill)
+//var hillSpeed = 0.0009;                   // background hill layer scroll speed when going around curve (or up hill)
+//var treeSpeed = 0.0011;                   // background tree layer scroll speed when going around curve (or up hill)
+//var galaxySpeed = 0.0003;                   // background galaxy layer scroll speed when going around curve (or up hill)
+//var skyOffset = 0;                       // current sky scroll offset
+//var hillOffset = 0;                       // current hill scroll offset
+//var treeOffset = 0;                       // current tree scroll offset
+//var galaxyOffset = 0;                       // current galaxy scroll offset
+
 var segments = [];                      // array of road segments
 var cars = [];                      // array of cars on the road
 var stats = Game.stats('fps');       // mr.doobs FPS counter
 var canvas = Dom.get('canvas');       // our canvas...
+//var canvasFrame = Dom.get('frame');       // our canvas...
 var ctx = canvas.getContext('2d'); // ...and its drawing context
 //efh offscreen render -- didn't help with moire during rotation and made FPS worse so revert
 // repurpose offscreen canvas to clip timeMarker text
@@ -158,12 +161,6 @@ var resolution = null;                    // scaling factor to provide resolutio
 var autoSteer = false;
 var bike = true;
 var currentColor = null;
-
-var timeScale = 3;
-//chgTimeScale();
-var timeScaleJump = 0;
-var timeSpacing = 500;
-var timeStart = 35;
 
 var roadWidth = 2000;                    // actually half the roads width, easier math if the road spans from -roadWidth to +roadWidth
 var segmentLength = 200;                     // length of a single segment
@@ -192,7 +189,10 @@ var lastLapTime = null;                    // last lap time
 var currentRotation = 0; //horizon tilt
 
 var circles = [];   // used for explosions
-var circleCount = 500; // decreased to 100 if we're in lowres mode
+var circleCount = 500; // decreased if we're in lowres mode
+var fragments = [];   // alternative for explosions - uses sprites instead of drawing polygons
+var fragmentCount = 100; // decreased if we're in lowres mode
+var fragmentSprite = SPRITES.STAR1;
 
 var keyLeft = false;
 var keyRight = false;
@@ -207,6 +207,66 @@ var hud = {
     fast_lap_time:{ value:null, dom:Dom.get('fast_lap_time_value')    }
 };
 
+var timeScales = [];
+timeScales.push( // timeScale 0 - space, largest scale
+    {   bg1: BACKGROUND.GALAXY,
+        bg1Speed: 0.0003,       // background layer scroll speed when going around curve (or up hill)
+        bg1Offset: 0,           // current scroll offset for background 1
+        allowRotate: false,
+        timeMarkerColor: '#FFFFFF',
+        roadType: 1             // how to draw road - 0 don't, 1 indiv segments, 2 big polygon
+    });
+timeScales.push( // timeScale 1 - space, next largest scale
+    {   bg1: BACKGROUND.GALAXY,
+        bg1Speed: 0.0003,       // background layer scroll speed when going around curve (or up hill)
+        bg1Offset: 0,            // current scroll offset for background 1
+        allowRotate: false,
+        timeMarkerColor: '#FFFFFF',
+        roadType: 1             // how to draw road - 0 don't, 1 indiv segments, 2 big polygon
+    });
+timeScales.push( // timeScale 2 - desert world, no road, sandy ground
+    {   bg1: BACKGROUND.SKY,
+        bg1Speed: 0.0005,       // background layer scroll speed when going around curve (or up hill)
+        bg1Offset: 0,           // current scroll offset for background 1
+        allowRotate: true,
+        timeMarkerColor: '#FFFF00',
+        roadType: 0,             // how to draw road - 0 don't, 1 indiv segments, 2 big polygon
+        groundColor: COLORS.LIGHT.road
+    });
+timeScales.push( // timeScale 3 - water world, no road, blue "ground"
+    {   bg1: BACKGROUND.SKY,
+        bg1Speed: 0.0005,       // background layer scroll speed when going around curve (or up hill)
+        bg1Offset: 0,           // current scroll offset for background 1
+        allowRotate: false,
+        timeMarkerColor: '#FFFF00',
+        roadType: 0,             // how to draw road - 0 don't, 1 indiv segments, 2 big polygon
+        groundColor: '#0077aa'
+    });
+for (var n = 4; n < 9; n++) { // timeScale 4-8 - regular world
+    timeScales.push(
+        {   bg1: BACKGROUND.SKY,
+            bg1Speed: 0.0005,       // background layer scroll speed when going around curve (or up hill)
+            bg1Offset: 0,           // current scroll offset for background 1
+            bg2: BACKGROUND.HILLS,
+            bg2Speed: 0.0009,       // background layer scroll speed when going around curve (or up hill)
+            bg2Offset: 0,           // current scroll offset for background 1
+            bg3: BACKGROUND.TREES,
+            bg3Speed: 0.0011,       // background layer scroll speed when going around curve (or up hill)
+            bg3Offset: 0,           // current scroll offset for background 1
+            allowRotate: true,
+            timeMarkerColor: '#FFFFFF',
+            roadType: 2,            // how to draw road - 0 don't, 1 indiv segments, 2 big polygon
+            groundColor: COLORS.DARK.grass
+        });
+
+}
+var timeScale = 3;
+var currentTimeScale = null;
+chgTimeScale();
+var timeScaleJump = 0; // alpha value used to display explosion when we jump timescales
+var timeSpacing = 500; // number of segments between successive timeScale Markers
+var timeStart = 35; // number of segments from start to display "today"
+
 //-------------------------------------------------------------------------
 function chgTimeScale(incr) {
     incr = incr || 0;
@@ -216,6 +276,7 @@ function chgTimeScale(incr) {
         timeScale = timeScale + incr;
         timeScale = (timeScale < 0) ? 8 : (timeScale > 8) ? 0 : timeScale;
     }
+    currentTimeScale = timeScales[timeScale];
     if (timeScale == 3) { // water
         maxSpeed = maxSpeed / 2;
     } else {
@@ -236,8 +297,8 @@ function createCircle() {
     }
 
     //Place the circles just below the center
-    this.x = canvas.width / 2;
-    this.y = canvas.height * 5 / 9;
+    this.x = Math.round(canvas.width / 2);
+    this.y = Math.round(canvas.height * 5 / 9);
 
     //Random velocities between -20 and +20 (negative value so that they move in both directions)
     this.vx = -20 + Math.random() * 40;
@@ -259,13 +320,44 @@ function createCircle() {
 
     //Random starting radius and increase speed
 
-    this.radius = size + Math.random();
+    this.radius = Math.round(size + Math.random());
     this.vr = .05 + Math.random();
     this.rmax = rmax;
 
     //Random starting alpha and decrease speed
     this.a = Math.max(alpha + Math.random(), 1);
     this.va = .01 + Math.random() / 20;
+}
+
+//-------------------------------------------------------------------------
+function createFragment() {
+    var fsize = .005; //default starting %size
+    var maxsize = 2.5; //default maximum %size
+    this.a = .5 * Math.random(); //random starting alpha
+    this.va = .0005 + Math.random() / 100; // alpha decrease factor
+    this.vx = -20 + Math.random() * 40; // pace at which the sprite moves away from the centre
+    this.vy = -20 + Math.random() * 40;
+    this.vs = 1 + Math.random()*.1; // speed of sprite
+
+    if (timeScaleJump > 0) { // create a bigger/whiter explosion for timescale jumps
+        fsize = .003;
+        maxsize = 2.5;
+        this.a = .5 * Math.random(); //random starting alpha
+        this.va = .0005 + Math.random() / 100;
+        this.vx = -15 + Math.random() * 30;
+        this.vy = -15 + Math.random() * 30;
+        this.vs = 1 + Math.random()*.08;
+    }
+
+    //Place the fragments just below the center
+    this.x = Math.round(canvas.width / 2);
+    this.y = Math.round(canvas.height * 5 / 9);
+
+    //Random starting width and increase speed
+    var initsize = fsize + Math.random();
+    this.w = Math.round(fragmentSprite.w * initsize);
+    this.h = Math.round(fragmentSprite.h * initsize);
+    this.maxw = fragmentSprite.w * maxsize;
 }
 
 //=========================================================================
@@ -296,9 +388,10 @@ function update(dt) {
     //}
 
     playerX = playerX - (dx * speedPercent * playerSegment.curve * centrifugal);
-    if (autoSteer) {
-        playerX = Util.limit(playerX, -.8, .8);     //keep on path
-    }
+    // keep on path is done further down
+    //if (autoSteer) {
+    //   playerX = Util.limit(playerX, -.8, .8);     //keep on path
+    //}
 
     if (keyFaster || autoSteer)
         speed = Util.accelerate(speed, accel, dt);
@@ -348,13 +441,26 @@ function update(dt) {
                 // try out an explosion of sorts
                 //circles = baseCircles.slice(0);
                 if (timeScaleJump <= 0) { //time scale jump
-                    circles = [];
                     timeScaleJump = .98;
-                    for (var i = 0; i < circleCount; i++) {
-                        //circles.push(new createCircle(false,10,300,.98));
-                        //circles.push(new createCircle(true, (1-(i/circleCount))));
-                        circles.push(new createCircle());
+
+                    // use circles for low-res, fragments (sprites) otherwise
+                    if (width == 480) {
+                        circles = [];
+                        //noinspection JSDuplicatedDeclaration
+                        for (var i = 0; i < circleCount; i++) {
+                            //circles.push(new createCircle(false,10,300,.98));
+                            //circles.push(new createCircle(true, (1-(i/circleCount))));
+                            //noinspection JSPotentiallyInvalidConstructorUsage
+                            circles.push(new createCircle());
+                        }
+                    } else {
+                        fragments = [];
+                        for (var j = 0; j < fragmentCount; j++) {
+                            //noinspection JSPotentiallyInvalidConstructorUsage
+                            fragments.push(new createFragment());
+                        }
                     }
+
                     //timeScale = Util.randomInt(0,8);
                     if (sprite.offset > 0) { // hit billboard on right side of road, increase timescale
                         chgTimeScale(1);
@@ -363,8 +469,8 @@ function update(dt) {
                     }
 
                     // change total cars count to change world
-                    window.setTimeout(reduceCars, 250);
-                    //reduceCars();
+                    //window.setTimeout(reduceCars, 250);
+                    reduceCars();
 
                     // randomly change timescale
                     //timeScale = Util.randomInt(0,8);
@@ -396,11 +502,23 @@ function update(dt) {
                     currentRotation = 0;
                 }
 
-                // try out an explosion of sorts
-                if (circles.length < circleCount * 2) {
-                    for (var i = 0; i < circleCount; i++) {
-                        //circles.push(new createCircle());
-                        circles.push(new createCircle());
+                // use circles for low-res explosion, fragments (sprites) otherwise
+                if (width == 480) {
+                    if (circles.length < circleCount * 2) {
+                        //noinspection JSDuplicatedDeclaration
+                        for (var i = 0; i < circleCount; i++) {
+                            //circles.push(new createCircle());
+                            //noinspection JSPotentiallyInvalidConstructorUsage
+                            circles.push(new createCircle());
+                        }
+                    }
+                } else {
+                    if (fragments.length < fragmentCount * 2) {
+                        //noinspection JSDuplicatedDeclaration
+                        for (var i = 0; i < fragmentCount; i++) {
+                            //noinspection JSPotentiallyInvalidConstructorUsage
+                            fragments.push(new createFragment());
+                        }
                     }
                 }
 
@@ -410,18 +528,21 @@ function update(dt) {
     }
 
     if (timeScaleJump > 0) {
-        timeScaleJump -= dt / 3;
+        timeScaleJump -= dt / 2;
         //updateHud('fast_lap_time',timeScaleJump); // test
     }
 
     //playerX = Util.limit(playerX, -3, 3);     // dont ever let it go too far out of bounds
-    playerX = Util.limit(playerX, -.8, .8);     // dont ever let it go too far out of bounds
+    playerX = Util.limit(playerX, -.9, .9);     // dont ever let it go too far out of bounds
     speed = Util.limit(speed, 0, maxSpeed); // or exceed maxSpeed
 
-    skyOffset = Util.increase(skyOffset, skySpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
-    hillOffset = Util.increase(hillOffset, hillSpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
-    treeOffset = Util.increase(treeOffset, treeSpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
-    galaxyOffset = Util.increase(galaxyOffset, galaxySpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    currentTimeScale.bg1Offset = Util.increase(currentTimeScale.bg1Offset, currentTimeScale.bg1Speed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    currentTimeScale.bg2Offset = Util.increase(currentTimeScale.bg2Offset, currentTimeScale.bg2Speed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    currentTimeScale.bg3Offset = Util.increase(currentTimeScale.bg3Offset, currentTimeScale.bg3Speed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    //skyOffset = Util.increase(skyOffset, skySpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    //hillOffset = Util.increase(hillOffset, hillSpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    //treeOffset = Util.increase(treeOffset, treeSpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    //galaxyOffset = Util.increase(galaxyOffset, galaxySpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
 
     if (position > playerZ) {
         if (currentLapTime && (startPosition < playerZ)) {
@@ -472,7 +593,7 @@ function updateCars(dt, playerSegment, playerW) {
         car.percent = Util.percentRemaining(car.z, segmentLength); // useful for interpolation during rendering phase
         newSegment = findSegment(car.z);
         if (oldSegment != newSegment) {
-            index = oldSegment.cars.indexOf(car);
+            var index = oldSegment.cars.indexOf(car);
             oldSegment.cars.splice(index, 1);
             newSegment.cars.push(car);
         }
@@ -497,7 +618,8 @@ function updateCarOffset(car, carSegment, playerSegment, playerW) {
                 dir = 1;
             else
                 dir = (car.offset > playerX) ? 1 : -1;
-            return dir * 1 / i * (car.speed - speed) / maxSpeed; // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
+            //return dir * 1 / i * (car.speed - speed) / maxSpeed; // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
+            return dir / i * (car.speed - speed) / maxSpeed; // the closer the cars (smaller i) and the greated the speed ratio, the larger the offset
         }
 
         for (j = 0; j < segment.cars.length; j++) {
@@ -510,7 +632,8 @@ function updateCarOffset(car, carSegment, playerSegment, playerW) {
                     dir = 1;
                 else
                     dir = (car.offset > otherCar.offset) ? 1 : -1;
-                return dir * 1 / i * (car.speed - otherCar.speed) / maxSpeed;
+                //return dir * 1 / i * (car.speed - otherCar.speed) / maxSpeed;
+                return dir / i * (car.speed - otherCar.speed) / maxSpeed;
             }
         }
     }
@@ -576,8 +699,12 @@ function render() {
 //updateHud('fast_lap_time', baseSegment.index + "/" + segments.length); // test
 //updateHud('fast_lap_time',currentRotation); // test
 //updateHud('fast_lap_time',timeScale); // test
-    if (bike && (timeScale > 1) && (timeScale != 3)) { // avoid rotation when drawing space roads that include dark underneath segments (get moire otherwise); also for water world
-        rotation = 0;
+
+
+
+    //if (bike && (timeScale > 1) && (timeScale != 3)) { // avoid rotation when drawing space roads that include dark underneath segments (get moire otherwise); also for water world
+    if (bike && currentTimeScale.allowRotate) {
+        var rotation = 0;
         //updateHud('km_remaining', baseSegment.curve); // test
         //updateHud('fast_lap_time', currentRotation); // test
         if (baseSegment.curve == 0) {
@@ -585,7 +712,10 @@ function render() {
             currentRotation = 0;
         } else {
             //newrot = -Math.round(baseSegment.curve*speed/maxSpeed*24*10)/10;
-            newrot = Math.round(baseSegment.curve * speed / maxSpeed * 1000) / 1000;
+            //newrot = Math.round(baseSegment.curve * speed / maxSpeed * 1000) / 1000;
+            // don't overrotate or we see the undrawn corner of canvas
+            var newrot  = Util.limit(Math.round(baseSegment.curve * speed / maxSpeed * 1000) / 1000, -6, 6);
+            //updateHud('fast_lap_time', newrot); // test
             rotation = newrot - currentRotation;
             currentRotation = newrot;
         }
@@ -614,6 +744,13 @@ function render() {
     //ctx.clearRect(0, 0, width, height);
     //ctx2.clearRect(0, 0, width, height);
 
+    Render.background(ctx, background, width, height, currentTimeScale.bg1, currentTimeScale.bg1Offset, resolution * currentTimeScale.bg1Speed * playerY);
+    if (currentTimeScale.bg2)
+        Render.background(ctx, background, width, height, currentTimeScale.bg2, currentTimeScale.bg2Offset, resolution * currentTimeScale.bg2Speed * playerY);
+    if (currentTimeScale.bg3)
+        Render.background(ctx, background, width, height, currentTimeScale.bg3, currentTimeScale.bg3Offset, resolution * currentTimeScale.bg3Speed * playerY);
+
+    /*
     if (timeScale == 2 || timeScale == 3) { // water and desert world - sky down to horizon
         Render.background(ctx, background, width, height, BACKGROUND.SKY, skyOffset, resolution * skySpeed * playerY);
     } else if (timeScale <= 1) { // space background
@@ -623,6 +760,7 @@ function render() {
         Render.background(ctx, background, width, height, BACKGROUND.HILLS, hillOffset, resolution * hillSpeed * playerY);
         Render.background(ctx, background, width, height, BACKGROUND.TREES, treeOffset, resolution * treeSpeed * playerY);
     }
+    */
     //Render.background(ctx2, background, width, height, BACKGROUND.SKY,   skyOffset,  resolution * skySpeed  * playerY);
     //Render.background(ctx2, background, width, height, BACKGROUND.HILLS, hillOffset, resolution * hillSpeed * playerY);
     //Render.background(ctx2, background, width, height, BACKGROUND.TREES, treeOffset, resolution * treeSpeed * playerY);
@@ -698,6 +836,12 @@ function render() {
 
     //efh horizon test - now that we know maxy, draw one large polygon for ground
     ctx.save();
+    if (currentTimeScale.groundColor) {  // draw ground
+        ctx.fillStyle = currentTimeScale.groundColor;
+        ctx.fillRect(0, maxy-1, width, height);
+    }
+
+    /*
     if (timeScale < 2) {  // space, no ground
         // canvas bg is black so leave it alone
         //ctx.fillStyle = '#000000';
@@ -712,6 +856,7 @@ function render() {
         ctx.fillStyle = COLORS.DARK.grass;
         ctx.fillRect(0, maxy, width, height);
     }
+    */
     ctx.restore();
     //efh offscreen render
     //ctx2.fillStyle = COLORS.DARK.grass;
@@ -719,14 +864,15 @@ function render() {
 
 
     //test combining road segments into one polygon for drawing speed
-    if (timeScale > 3) {  // space (0&1) requires indiv road segments to clip flying sprites; sand or water background (2&3) don't show road
+    //if (timeScale > 3) {  // space (0&1) requires indiv road segments to clip flying sprites; sand or water background (2&3) don't show road
+    if (currentTimeScale.roadType == 2) {  // space (0&1) requires indiv road segments to clip flying sprites; sand or water background (2&3) don't show road
         //if ( timeScale > 3 && timeScale != 8) {  // test timescale 8 as indiv road segments as well to compare with 7 which is bigpoly
         var xyArray1 = [];
         var xyArray2 = [];
         var lastx1 = 0;
         var lastx2 = 0;
         for (n = (drawDistance - 1); n > 0; n--) {
-            seg = segments[(baseSegment.index + n ) % segments.length];
+            var seg = segments[(baseSegment.index + n ) % segments.length];
             if (seg.drawRoad) {  // sand or water background don't show road
                 if (lastx1 != seg.p2.screen.x - seg.p2.screen.w) {
                     lastx1 = seg.p2.screen.x - seg.p2.screen.w;
@@ -759,7 +905,8 @@ function render() {
 
         // draw road segments
 
-        if (segment.drawRoad && timeScale <= 1) {  // space backgrounds only use indiv segments to overlay flying sprites (bigpoly doesn't work)
+        //if (segment.drawRoad && timeScale <= 1) {  // space backgrounds only use indiv segments to overlay flying sprites (bigpoly doesn't work)
+        if (segment.drawRoad && currentTimeScale.roadType == 1) {  // space backgrounds only use indiv segments to overlay flying sprites (bigpoly doesn't work)
             //if (segment.drawRoad && (timeScale <= 1 || timeScale == 8)) {  // test timescale 8 as indiv road segments as well to compare with 7 which is bigpoly
 
             Render.segment(ctx, width, lanes,
@@ -785,12 +932,12 @@ function render() {
                 spriteScale = Util.interpolate(segment.p1.screen.scale, segment.p2.screen.scale, 1);
                 spriteX = Util.interpolate(segment.p1.screen.x, segment.p2.screen.x, 1) + (spriteScale * sprite.offset * roadWidth * width / 2);
                 spriteY = Util.interpolate(segment.p1.screen.y, segment.p2.screen.y, 1);
-                Render.sprite(ctx, width, height, resolution, roadWidth, sprites, sprite.source, spriteScale, spriteX, spriteY, -.5, sprite.offsety, segment.clip);
+                Render.sprite(ctx, width, height, resolution, roadWidth, sprites, sprite.source, spriteScale, spriteX, spriteY, -.5, sprite.offsetY, segment.clip);
             } else {
                 spriteScale = segment.p1.screen.scale;
                 spriteX = segment.p1.screen.x + (spriteScale * sprite.offset * roadWidth * width / 2);
                 spriteY = segment.p1.screen.y;
-                Render.sprite(ctx, width, height, resolution, roadWidth, sprites, sprite.source, spriteScale, spriteX, spriteY, sprite.offset, sprite.offsety, segment.clip);
+                Render.sprite(ctx, width, height, resolution, roadWidth, sprites, sprite.source, spriteScale, spriteX, spriteY, sprite.offset, sprite.offsetY, segment.clip);
             }
 
 
@@ -805,6 +952,7 @@ function render() {
                     segment.p1.screen.w,
                     segment.clip,
                     segment.p1.screen.scale,
+                    currentTimeScale.timeMarkerColor,
                     // segment.timeMarker);
                     timeMarkerVal(timeScale, segment.timeMarker));
         }
@@ -816,7 +964,7 @@ function render() {
             spriteScale = Util.interpolate(segment.p1.screen.scale, segment.p2.screen.scale, car.percent);
             spriteX = Util.interpolate(segment.p1.screen.x, segment.p2.screen.x, car.percent) + (spriteScale * car.offset * roadWidth * width / 2);
             spriteY = Util.interpolate(segment.p1.screen.y, segment.p2.screen.y, car.percent);
-            Render.sprite(ctx, width, height, resolution, roadWidth, sprites, car.sprite, spriteScale, spriteX, spriteY, -0.5, car.offsety, segment.clip , 0, car.percent );
+            Render.sprite(ctx, width, height, resolution, roadWidth, sprites, car.sprite, spriteScale, spriteX, spriteY, -0.5, car.offsetY, segment.clip , 0, car.percent );
         }
 
         // draw player sprite
@@ -915,33 +1063,59 @@ function render() {
      */
 
     // if any explosion remaining display it
-
-    //Fill the canvas with circles
     ctx.save();
 
-    // this line causes firefox desktop 17.0.1 and 18beta to come to a crawl while circles are displayed
-    ctx.globalCompositeOperation = "lighter";
-    //ctx.globalCompositeOperation = "destination-out";
-    for (var j = 0; j < circles.length; j++) {
-        var c = circles[j];
+    // low res uses circles
+    if (width == 480) {
 
-        //Create the circles
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2, false);
-        ctx.fillStyle = "rgba(" + c.r + ", " + c.g + ", " + c.b + ", " + c.a + ")";
-        ctx.fill();
+        // this line causes firefox desktop 17.0.1 and 18beta to come to a crawl while circles are displayed
+        //ctx.globalCompositeOperation = "lighter";
+        //ctx.globalCompositeOperation = "destination-out";
+        //noinspection JSDuplicatedDeclaration
+        for (var j = 0; j < circles.length; j++) {
+            var c = circles[j];
 
-        c.x += c.vx;
-        c.y += c.vy;
-        //c.radius -= .05;
-        c.radius += c.vr;
-        c.a -= c.va;
-        c.flashAlpha -= c.vfa;
-        //if(c.radius < 0)
-        if (c.radius > c.rmax || c.a < 0)
-            circles.splice(j, 1);
-        //		circles[j] = new create();
+            //Create the circles
+            ctx.beginPath();
+            ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2, false);
+            ctx.fillStyle = "rgba(" + c.r + ", " + c.g + ", " + c.b + ", " + c.a + ")";
+            ctx.fill();
+
+            c.x += c.vx;
+            c.y += c.vy;
+            //c.radius -= .05;
+            c.radius += c.vr;
+            c.a -= c.va;
+            //c.flashAlpha -= c.vfa;
+            //if(c.radius < 0)
+            if (c.radius > c.rmax || c.a < 0)
+                circles.splice(j, 1);
+            //		circles[j] = new create();
+        }
+    } else {
+
+        //noinspection JSDuplicatedDeclaration
+        for (var j = 0; j < fragments.length; j++) {
+            var f = fragments[j];
+
+            //Create the fragments
+            ctx.globalAlpha = f.a;
+            ctx.drawImage(sprites, fragmentSprite.x, fragmentSprite.y, fragmentSprite.w, fragmentSprite.h, f.x-(f.w/2), f.y-(f.h/2), f.w, f.h);
+            ctx.globalAlpha = 1;
+
+            f.x =  Math.round(f.x+f.vx);
+            f.y =  Math.round(f.y+f.vy);
+            //f.y += f.vy;
+            f.w = f.w * f.vs;
+            f.h = f.h * f.vs;
+            f.a -= f.va;
+            if (f.w > f.maxw || f.a < 0)
+                fragments.splice(j, 1);
+
+        }
     }
+
+
     if (timeScaleJump > 0) {
         ctx.fillStyle = "rgba(255,255,255," + timeScaleJump + ")";
         ctx.fillRect(0, 0, width, height);
@@ -984,10 +1158,12 @@ function addSprite(n, sprite, offset, offsety) {
     // increase negative offsety parm to allow sprites to be positioned above the ground
     // ground level is effectively -1 but needs to be slightly less to prevent illusion of sprites floating so try -.97
     offsety = offsety || -.97;
-    roadSprite = false;
+    var roadSprite = false;
+    //if (offset > -1 && offset < 1)
+    //    roadSprite = true;
     if (offset > -1 && offset < 1)
         roadSprite = true;
-    segments[n].sprites.push({ source:sprite, offset:offset, offsety:offsety, roadSprite:roadSprite });
+    segments[n].sprites.push({ source:sprite, offset:offset, offsetY:offsety, roadSprite:roadSprite });
 }
 
 function addRoad(enter, hold, leave, curve, y) {
@@ -1174,30 +1350,37 @@ function resetRoad() {
 
 function timeMarkerVal(timeScale, n) {
     var timeToday = 2013;
+    var ya = (n - timeStart) / timeSpacing;
     if (n == timeStart) {
         return "Today";
     } else if (timeScale == 0) { // every .5 billion years
-        return Math.round(((n - timeStart) / (timeSpacing * 2)) * 10) / 10 + " b.y.a.";
+        return Math.round(ya / 2 * 10) / 10 + " b.y.a.";
+        //return Math.round(((n - timeStart) / (timeSpacing * 2)) * 10) / 10 + " b.y.a.";
         //return "-"+Math.round(((n-timeStart)/(timeSpacing*2))*10)/10 + "b";
     } else if (timeScale == 1) { // every 50 million years
-        var ya = ((n - timeStart) / (timeSpacing / 50));
+        //var ya = ((n - timeStart) / (timeSpacing / 50));
+        ya = ya * 50;
         return (ya >= 1000) ? (Math.round(ya / 1000 * 100) / 100) + " b.y.a." : ya + " m.y.a.";
         //return "-"+((n-timeStart)/(timeSpacing/50)) + "m";
     } else if (timeScale == 2) { // every 5 million years
-        var ya = ((n - timeStart) / (timeSpacing / 5));
+        //var ya = ((n - timeStart) / (timeSpacing / 5));
+        ya = ya * 5;
         return (ya >= 1000) ? (Math.round(ya / 1000 * 1000) / 1000) + " b.y.a." : ya + " m.y.a.";
         //return ((n-timeStart)/(timeSpacing/5)) + " m.y.a.";
         //return "-"+((n-timeStart)/(timeSpacing/5)) + "m";
     } else if (timeScale == 3) { // every 1 million years
-        return ((n - timeStart) / timeSpacing) + " m.y.a.";
+        //return ((n - timeStart) / timeSpacing) + " m.y.a.";
+        return ya + " m.y.a.";
         //return "-"+((n-timeStart)/timeSpacing) + "m";
     } else if (timeScale == 4) { // every 50k years
-        var ya = ((n - timeStart) / (timeSpacing / 50));
+        //var ya = ((n - timeStart) / (timeSpacing / 50));
+        ya = ya * 50;
         return (ya >= 1000) ? (Math.round(ya / 1000 * 100) / 100) + " m.y.a." : ya + " t.y.a.";
         //return ((n-timeStart)/(timeSpacing/50)) + " t.y.a.";
         //return "-"+((n-timeStart)/(timeSpacing/50)) + "k";
     } else if (timeScale == 5) { // every 5k years
-        return ((n - timeStart) / (timeSpacing / 5)) + " t.y.a.";
+        //return ((n - timeStart) / (timeSpacing / 5)) + " t.y.a.";
+        return (ya * 5) + " t.y.a.";
         //return "-"+((n-timeStart)/(timeSpacing/5)) + "k";
     } else if (timeScale == 6) { // every 500 years
         //if (n - timeStart > 2000)
@@ -1205,18 +1388,23 @@ function timeMarkerVal(timeScale, n) {
         //else
         //	return 2000 + timeStart - n + " CE";
 
-        var ya = (n - timeStart) / (timeSpacing / 500);
+        //var ya = (n - timeStart) / (timeSpacing / 500);
+        ya = ya * 500;
         if (ya >= 10000) {
             return (Math.round(ya / 1000 * 1000) / 1000) + " t.y.a.";
         } else if (ya > 2000) {
-            return ya - 2000 + " BCE";
+            return n - timeStart - 2000 + " BCE";
         } else {
             return 2000 + timeStart - n + " CE";
         }
     } else if (timeScale == 7) {  // every 5 years
-        return timeToday - ((n - timeStart) / 100);
+        //return timeToday - ((n - timeStart) / 100);
+        return timeToday - (ya * 5);
     } else if (timeScale == 8) {  // every year
-        return timeToday - ((n - timeStart) / 500);
+        //return timeToday - ((n - timeStart) / 500);
+        return timeToday - ya;
+    } else {
+        return "";
     }
 }
 
@@ -1271,8 +1459,8 @@ function resetSprites() {
         //addSprite(n, Util.randomChoice(SPRITES.PLANTS), Util.randomChoice([1,-1]) * (1 + Math.random() * 5));
         //var spr = (timeScale < 2)?SPRITES.BUSH2: (timeScale ==3)? Util.randomChoice(SPRITES.BOULDERS):Util.randomChoice(SPRITES.PLANTS);
         var spr = (timeScale < 2) ? Util.randomChoice(SPRITES.STARS) : (timeScale == 3) ? Util.randomChoice(SPRITES.BOULDERS) : Util.randomChoice(SPRITES.PLANTS);
-        var offsety = (timeScale < 2) ? Util.randomChoice([1, -1]) * Math.random() * 6 : 0;
-        addSprite(n, spr, Util.randomChoice([1, -1]) * (1 + Math.random() * 5), offsety);
+        var offsetY = (timeScale < 2) ? Util.randomChoice([1, -1]) * Math.random() * 6 : 0;
+        addSprite(n, spr, Util.randomChoice([1, -1]) * (1 + Math.random() * 5), offsetY);
     }
 
     if (timeScale > 3) {
@@ -1294,14 +1482,15 @@ function resetSprites() {
 
 function resetCars() {
     cars = [];
-    var n, car, segment, offset, z, sprite, speed;
+    var car, segment, offset, z, sprite, speed;
     var offsety = (timeScale == 3)?  -.35 : -.97;
     for (var n = 0; n < totalCars; n++) {
         offset = Math.random() * Util.randomChoice([-0.8, 0.8]);
         z = Math.floor(Math.random() * segments.length) * segmentLength;
         sprite = Util.randomChoice(SPRITES.CARS);
-        speed = maxSpeed / 4 + Math.random() * maxSpeed / (sprite == SPRITES.SEMI ? 4 : 2);
-        car = { offset:offset, z:z, sprite:sprite, offsety:offsety, speed:speed };
+        //speed = maxSpeed / 4 + Math.random() * maxSpeed / (sprite == SPRITES.SEMI ? 4 : 2);
+        speed = maxSpeed / 4 + Math.random() * maxSpeed / 2;
+        car = { offset:offset, z:z, sprite:sprite, offsetY:offsety, speed:speed };
         segment = findSegment(car.z);
         segment.cars.push(car);
         cars.push(car);
@@ -1376,7 +1565,8 @@ function reset(options) {
     refreshTweakUI();
 
 
-    if ((segments.length == 0) || (options.segmentLength) || (options.rumbleLength))
+    //if ((segments.length == 0) || (options.segmentLength) || (options.rumbleLength))
+    if ((segments.length == 0) || (options.segmentLength))
         resetRoad(); // only rebuild road when necessary
 }
 
@@ -1433,7 +1623,7 @@ Dom.on('resolution', 'change', function (ev) {
             circleCount = 100;
             break;
     }
-    reset({ width:w, height:h })
+    reset({ width:w, height:h });
     Dom.blur(ev);
 });
 
@@ -1477,14 +1667,8 @@ Dom.on('fogDensity', 'change', function (ev) {
 
 function refreshTweakUI() {
     Dom.get('lanes').selectedIndex = lanes - 1;
-    if (autoSteer)
-        document.getElementById('autoSteer').checked = true;
-    else
-        document.getElementById('autoSteer').checked = false;
-    if (bike)
-        document.getElementById('bike').checked = true;
-    else
-        document.getElementById('bike').checked = false;
+    document.getElementById('autoSteer').checked = autoSteer;
+    document.getElementById('bike').checked = bike;
     Dom.get('currentTotalCars').innerHTML = Dom.get('totalCars').value = totalCars;
     Dom.get('currentRoadWidth').innerHTML = Dom.get('roadWidth').value = roadWidth;
     Dom.get('currentCameraHeight').innerHTML = Dom.get('cameraHeight').value = cameraHeight;
