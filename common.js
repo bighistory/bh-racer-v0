@@ -43,7 +43,7 @@ var Dom = {
 
     storage:window.localStorage || {}
 
-}
+};
 
 //=========================================================================
 // general purpose helpers (mostly math)
@@ -180,7 +180,7 @@ var Util = {
         return false;
     }
 
-}
+};
 
 //=========================================================================
 // POLYFILL for requestAnimationFrame
@@ -229,35 +229,35 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
             var doLeftStart = function (e) {
                 e.preventDefault();
                 keyLeft = true;
-            }
+            };
             var doLeftEnd = function (e) {
                 e.preventDefault();
                 keyLeft = false;
-            }
+            };
             var doFasterStart = function (e) {
                 e.preventDefault();
                 keyFaster = true;
-            }
+            };
             var doFasterEnd = function (e) {
                 e.preventDefault();
                 keyFaster = false;
-            }
+            };
             var doSlowerStart = function (e) {
                 e.preventDefault();
                 keySlower = true;
-            }
+            };
             var doSlowerEnd = function (e) {
                 e.preventDefault();
                 keySlower = false;
-            }
+            };
             var doRightStart = function (e) {
                 e.preventDefault();
                 keyRight = true;
-            }
+            };
             var doRightEnd = function (e) {
                 e.preventDefault();
                 keyRight = false;
-            }
+            };
             document.getElementById('left').addEventListener(startEvent, doLeftStart, false);
             document.getElementById('left').addEventListener(endEvent, doLeftEnd, false);
             document.getElementById('faster').addEventListener(startEvent, doFasterStart, false);
@@ -407,7 +407,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
         });
     }
 
-}
+};
 
 //=========================================================================
 // canvas rendering helpers
@@ -451,11 +451,12 @@ var Render = {
 
         ctx.beginPath();
         ctx.moveTo(xyArray2[0], xyArray2[1]);
-        for (var i = 2; i < xyArray2.length - 1; i += 2) {
+        var i;
+        for (i = 2; i < xyArray2.length - 1; i += 2) {
             ctx.lineTo(xyArray2[i], xyArray2[i + 1]);
         }
         ctx.lineTo(xyArray1[0], xyArray1[1]);
-        for (var i = 2; i < xyArray1.length - 1; i += 2) {
+        for (i = 2; i < xyArray1.length - 1; i += 2) {
             ctx.lineTo(xyArray1[i], xyArray1[i + 1]);
         }
         //ctx.lineTo(xyArray1[0], xyArray1[1]);
@@ -468,7 +469,8 @@ var Render = {
 
     //---------------------------------------------------------------------------
 
-    segment:function (ctx, width, lanes, x1, y1, w1, x2, y2, w2, fog, color, scale, timeMarker) {
+    //segment:function (ctx, width, lanes, x1, y1, w1, x2, y2, w2, fog, color, scale, timeMarker) {
+    segment:function (ctx, width, lanes, x1, y1, w1, x2, y2, w2, fog, color) {
 
         // save cpu cycles by not rendering rumble strips (rely on stationary sprites to show forward movement)
         /*
@@ -527,7 +529,7 @@ var Render = {
             //console.log(fontsize, x1+w1+r1, y1, clipY);
             ctx.save();
             ctx.fillStyle = color;
-            ctx.font = fontsize + "px sans-serif"
+            ctx.font = fontsize + "px sans-serif";
             ctx.fillText(timeMarker, x1 + w1 + r1, y1);
             ctx.restore();
         }
@@ -564,7 +566,7 @@ var Render = {
         var imageH = layer.h;
 
         var sourceX = layer.x + Math.floor(layer.w * rotation);
-        var sourceY = layer.y
+        var sourceY = layer.y;
         var sourceW = Math.min(imageW, layer.x + layer.w - sourceX);
         var sourceH = imageH;
 
@@ -653,7 +655,7 @@ var Render = {
     player:function (ctx, width, height, resolution, roadWidth, sprites, speedPercent, scale, destX, destY, steer, updown) {
 
         var bounce = (1.5 * Math.random() * speedPercent * resolution) * Util.randomChoice([-1, 1]);
-        if (destY > 9000) {
+        if (destY > 9000) { // flying
             destY = 9000;
             bounce = 0;
         }
@@ -665,11 +667,11 @@ var Render = {
         if (bike && timeScale > 1 && timeScale != 3) // avoid rotation when drawing space roads that include dark underneath segments (get moire otherwise), also for water world
             counterRotate = currentRotation * 1.5 * (Math.PI / 90);
         if (steer < 0) {
-            sprite = SPRITES.PLAYER3LEFT;
+            sprite = (updown > 0) ? SPRITES.PLAYER3LEFT : SPRITES.PLAYER3LEFT;
         } else if (steer > 0) {
-            sprite = SPRITES.PLAYER3RIGHT;
+            sprite = (updown > 0) ? SPRITES.PLAYER3RIGHT : SPRITES.PLAYER3RIGHT;
         } else {
-            sprite = SPRITES.PLAYER3;
+            sprite = (updown > 0) ? SPRITES.PLAYER3 : SPRITES.PLAYER3;
         }
         Render.sprite(ctx, width, height, resolution, roadWidth, sprites, sprite, scale, destX, destY + bounce+ pushDown, -0.5, -1, 0, counterRotate);
 
@@ -712,7 +714,7 @@ var Render = {
 
     fog:function (ctx, x, y, width, height, fog) {
         if (fog < 1) {
-            ctx.globalAlpha = (1 - fog)
+            ctx.globalAlpha = (1 - fog);
             ctx.fillStyle = COLORS.FOG;
             ctx.fillRect(x, y, width, height);
             ctx.globalAlpha = 1;
@@ -726,7 +728,7 @@ var Render = {
         return projectedRoadWidth / Math.max(32, 8 * lanes);
     }
 
-}
+};
 
 //=============================================================================
 // RACING GAME CONSTANTS
@@ -764,10 +766,10 @@ var COLORS = {
 //};
 
 var BACKGROUND = {
-    GALAXY:{  x:0, y:0, w:1280, h:480 },
-    HILLS:{  x:0, y:490, w:1280, h:480 },
-    SKY:{  x:0, y:980, w:1280, h:480 },
-    TREES:{  x:0, y:1470, w:1280, h:480 }
+GALAXY: {  x:0, y:0, w:1280, h:480 },
+HILLS: {  x:0, y:485, w:1280, h:480 },
+SKY: {  x:0, y:970, w:1280, h:480 },
+TREES: {  x:0, y:1455, w:1280, h:480 }
 };
 
 var SPRITES = {
@@ -863,7 +865,7 @@ TREE2: {  x:1170, y:0, w:282, h:295 }
 
 
 //SPRITES.SCALE = 0.3 * (1 / SPRITES.PLAYER_STRAIGHT.w) // the reference sprite width should be 1/3rd the (half-)roadWidth
-SPRITES.SCALE = 0.3 * (1 / SPRITES.PLAYER3.w) // the reference sprite width should be 1/3rd the (half-)roadWidth
+SPRITES.SCALE = 0.3 * (1 / SPRITES.PLAYER3.w); // the reference sprite width should be 1/3rd the (half-)roadWidth
 
 SPRITES.BILLBOARDS = [SPRITES.BILLBOARD01, SPRITES.BILLBOARD02, SPRITES.BILLBOARD03, SPRITES.BILLBOARD04, SPRITES.BILLBOARD05, SPRITES.BILLBOARD06, SPRITES.BILLBOARD07, SPRITES.BILLBOARD08, SPRITES.BILLBOARD09];
 SPRITES.PLANTS = [SPRITES.TREE1, SPRITES.TREE2, SPRITES.DEAD_TREE1, SPRITES.DEAD_TREE2, SPRITES.PALM_TREE, SPRITES.BUSH1, SPRITES.BUSH2, SPRITES.CACTUS, SPRITES.STUMP, SPRITES.BOULDER1, SPRITES.BOULDER2, SPRITES.BOULDER3];

@@ -5,12 +5,13 @@
 var Stats = function () {
 
   var startTime = Date.now(), prevTime = startTime;
-  var ms = 0, msMin = 1000, msMax = 0;
+  //var ms = 0, msMin = 1000, msMax = 0;
+  //var ms = 0;
   var fps = 0, fpsMin = 1000, fpsMax = 0;
-  var frames = 0, mode = 0;mode
+  var frames = 0 //, mode = 0; //mode
   var container = document.createElement( 'div' );
   container.id = 'stats';
-  container.addEventListener( 'mousedown', function ( event ) { event.preventDefault(); setMode( ++ mode % 2 ) }, false );
+  //container.addEventListener( 'mousedown', function ( event ) { event.preventDefault(); setMode( ++ mode % 2 ) }, false );
   container.style.cssText = 'width:80px;opacity:0.9;cursor:pointer';
 
   var fpsDiv = document.createElement( 'div' );
@@ -37,6 +38,7 @@ var Stats = function () {
 
   }
 
+  /*
   var msDiv = document.createElement( 'div' );
   msDiv.id = 'ms';
   msDiv.style.cssText = 'padding:0 0 3px 3px;text-align:left;background-color:#020;display:none';
@@ -60,7 +62,8 @@ var Stats = function () {
     msGraph.appendChild( bar );
 
   }
-
+  */
+    /*
   var setMode = function ( value ) {
 
     mode = value;
@@ -77,20 +80,21 @@ var Stats = function () {
         break;
     }
 
-  }
+  };
+  */
 
   var updateGraph = function ( dom, value ) {
 
     var child = dom.appendChild( dom.firstChild );
     child.style.height = value + 'px';
 
-  }
+  };
 
   return {
 
     domElement: container,
 
-    setMode: setMode,
+    //setMode: setMode,
 
     current: function() { return fps; },
 
