@@ -585,6 +585,7 @@ var Render = {
     sprite:function (ctx, width, height, resolution, roadWidth, sprites, sprite, scale, destX, destY, offsetX, offsetY, clipY, counterRotate, carPercent) {
         counterRotate = counterRotate || 0;
         carPercent = carPercent || 0;
+        offsetY = offsetY || -.97; // -1 is 1x the height of the sprite in the up (negative) y direction, meaning the sprite will sit at ground level
 
         //  scale for projection AND relative to roadWidth (for tweakUI)
         var destW = (sprite.w * scale * width / 2) * (SPRITES.SCALE * roadWidth);
@@ -597,6 +598,27 @@ var Render = {
 
         //var clipH = clipY ? Math.max(0, destY+destH-clipY) : 0;
         var clipH = (timeScale < 2)? 0: (carPercent && timeScale==3) ? destH/2+destH/15*carPercent : clipY ? Math.max(0, destY + destH - clipY) : 0;
+
+/*
+        //perhaps clip bottom of sprite
+        var clipH = 0;
+        var xtraY = 0; // pixels to shift sprite downloads to accommodate offsetY
+        //if (timeScale < 2) { // timescale < 2 is space, don't clip anything: sprites float above and below the road surface
+        //    clipH = 0;
+        //} else
+        if (carPercent && timeScale==3) { // timescale 3 is water world - want player sprites to appear floating
+            clipH = destH/2+destH/15*carPercent;
+        } else if (clipY) { // sprite perhaps clipped by ground (looking over hills for eg) but if offset down slightly (eg: ground level of sprite image isn't the very bottom of the sprite graphic) then don't clip as much
+            xtraY = -destH * (-1 -offsetY); // eg: offsetY = -.7 (shift slightly downwards) and destH = 100 makes xtraY 30px
+            clipH = Math.max(0, destY + destH - xtraY - clipY);
+        }
+*/
+        /*} else if (clipY && offsetY <= -1) { // regular clip of sprite by ground (looking over hills for eg)
+            clipH = Math.max(0, destY + destH - clipY);
+        } else if (clipY) { // possible clipping but sprite is also offset down slightly (eg: ground level of sprite image isn't the very bottom of the sprite graphic)
+            xtraH = -destH * (-1 -offsetY);
+            clipH = Math.max(0, destY + destH - clipY - xtraH);
+        }*/
 
         if (clipH < destH) {
 //			if (counterRotate) {
@@ -640,6 +662,7 @@ var Render = {
 
             //} else {
             ctx.drawImage(sprites, sprite.x, sprite.y, sprite.w, sprite.h - (sprite.h * clipH / destH), destX, destY, destW, destH - clipH);
+//            ctx.drawImage(sprites, sprite.x, sprite.y, sprite.w, sprite.h - (sprite.h * clipH / (destH+xtraY)), destX, destY+xtraY, destW, destH - clipH);
             //}
             if (counterRotate != 0) {
                 ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -773,104 +796,67 @@ TREES: {  x:0, y:1455, w:1280, h:480 }
 };
 
 var SPRITES = {
-ASTEROID1: {  x:0, y:0, w:150, h:150 },
-BILLBOARD01: {  x:0, y:155, w:300, h:170 },
-BILLBOARD02: {  x:0, y:330, w:215, h:220 },
-BILLBOARD03: {  x:0, y:555, w:230, h:220 },
-BILLBOARD04: {  x:0, y:780, w:268, h:170 },
-BILLBOARD05: {  x:0, y:955, w:298, h:190 },
-BILLBOARD06: {  x:0, y:1150, w:298, h:190 },
-BILLBOARD07: {  x:0, y:1345, w:298, h:190 },
-BILLBOARD08: {  x:0, y:1540, w:385, h:265 },
-BILLBOARD09: {  x:0, y:1810, w:328, h:282 },
-BOULDER1: {  x:390, y:0, w:168, h:248 },
-BOULDER2: {  x:390, y:253, w:298, h:140 },
-BOULDER3: {  x:390, y:398, w:320, h:220 },
-BUSH1: {  x:390, y:623, w:240, h:155 },
-BUSH2: {  x:390, y:783, w:232, h:152 },
-CACTUS: {  x:390, y:940, w:235, h:118 },
-DEAD_TREE1: {  x:390, y:1063, w:135, h:332 },
-DEAD_TREE2: {  x:390, y:1400, w:150, h:260 },
-OTHER1: {  x:390, y:1665, w:100, h:81 },
-OTHER2: {  x:390, y:1751, w:100, h:81 },
-OTHER3: {  x:390, y:1837, w:100, h:81 },
-OTHER4: {  x:390, y:1923, w:100, h:81 },
-OTHER5: {  x:780, y:0, w:100, h:81 },
-PALM_TREE: {  x:780, y:86, w:215, h:540 },
-PLAYER3: {  x:780, y:631, w:100, h:74 },
-PLAYER3LEFT: {  x:780, y:710, w:100, h:74 },
-PLAYER3RIGHT: {  x:780, y:789, w:100, h:74 },
-STAR1: {  x:780, y:868, w:200, h:200 },
-STAR2: {  x:780, y:1073, w:200, h:200 },
-STAR3: {  x:780, y:1278, w:200, h:200 },
-STAR4: {  x:780, y:1483, w:200, h:200 },
-STUMP: {  x:780, y:1688, w:195, h:140 },
-TREE1: {  x:780, y:1833, w:360, h:360 },
-TREE2: {  x:1170, y:0, w:282, h:295 }
+AGAVE: { x:1205, y:1048, w: 120, h:108},
+ASTEROID1: { x:411, y:422, w: 150, h:150},
+AYERSROCK: { x:611, y:585, w: 496, h:117},
+BILLBOARD01: { x:522, y:713, w: 300, h:170},
+BILLBOARD05: { x:893, y:231, w: 298, h:190},
+CACTUS: { x:0, y:1048, w: 95, h:299},
+HICKORY: { x:682, y:231, w: 200, h:343},
+HILL1: { x:0, y:585, w: 600, h:100},
+HILL2: { x:0, y:432, w: 400, h:67},
+ISLE: { x:893, y:432, w: 250, h:43},
+ISLE_MANGROVE: { x:833, y:713, w: 330, h:124},
+ISLE_PALM: { x:0, y:713, w: 300, h:173},
+ISLE_PALM2: { x:682, y:0, w: 400, h:220},
+JAPMAPLE: { x:1174, y:633, w: 200, h:175},
+JUNIPER: { x:1174, y:819, w: 150, h:218},
+OTHER1: { x:861, y:1167, w: 100, h:81},
+OTHER2: { x:750, y:1167, w: 100, h:81},
+OTHER3: { x:572, y:422, w: 100, h:81},
+OTHER4: { x:1304, y:92, w: 100, h:81},
+OTHER5: { x:1304, y:0, w: 100, h:81},
+PALM2: { x:311, y:713, w: 200, h:256},
+PLAYER3: { x:1194, y:1167, w: 100, h:74},
+PLAYER3LEFT: { x:1083, y:1167, w: 100, h:74},
+PLAYER3RIGHT: { x:972, y:1167, w: 100, h:74},
+ROCKS1: { x:589, y:1167, w: 150, h:70},
+ROCKS2: { x:428, y:1167, w: 150, h:70},
+SEEDS1: { x:644, y:899, w: 50, h:69},
+SEEDS2: { x:583, y:899, w: 50, h:69},
+SEEDS3: { x:522, y:899, w: 50, h:69},
+SEEDS4: { x:244, y:899, w: 50, h:69},
+SEEDS5: { x:183, y:899, w: 50, h:69},
+SEEDS6: { x:122, y:899, w: 50, h:69},
+SEEDS7: { x:61, y:899, w: 50, h:69},
+SEEDS8: { x:0, y:899, w: 50, h:69},
+SEEDS9: { x:1335, y:819, w: 50, h:69},
+SHOAL: { x:428, y:1048, w: 300, h:52},
+SHRUB1: { x:1044, y:1048, w: 150, h:92},
+STAR1: { x:1202, y:422, w: 200, h:200},
+STAR2: { x:1202, y:211, w: 200, h:200},
+STAR3: { x:1093, y:0, w: 200, h:200},
+STAR4: { x:833, y:848, w: 200, h:200},
+TIMEJUMPDOWN: { x:267, y:1048, w: 150, h:137},
+TIMEJUMPUP: { x:106, y:1048, w: 150, h:137},
+TREE3: { x:371, y:0, w: 300, h:361},
+TULIPIFERA: { x:0, y:0, w: 360, h:400},
+YUCCA: { x:739, y:1048, w: 80, h:71}
 };
 
-/*
-    ASTEROID1:{  x:0, y:0, w:150, h:150 },
-    BIKE2_LEFT:{  x:0, y:155, w:128, h:81 },
-    BIKE2_RIGHT:{  x:0, y:241, w:128, h:81 },
-    BIKE2_STRAIGHT:{  x:0, y:327, w:128, h:81 },
-    BIKE3_LEFT:{  x:0, y:413, w:192, h:94 },
-    BIKE3_RIGHT:{  x:0, y:512, w:192, h:94 },
-    BIKE3_STRAIGHT:{  x:0, y:611, w:192, h:94 },
-    BIKE_LEFT:{  x:0, y:710, w:78, h:128 },
-    BIKE_RIGHT:{  x:0, y:843, w:78, h:128 },
-    BIKE_STRAIGHT:{  x:0, y:976, w:78, h:128 },
-    BIKE_UPHILL_LEFT:{  x:0, y:1109, w:78, h:128 },
-    BIKE_UPHILL_RIGHT:{  x:0, y:1242, w:78, h:128 },
-    BIKE_UPHILL_STRAIGHT:{  x:0, y:1375, w:78, h:128 },
-    BILLBOARD01:{  x:0, y:1508, w:300, h:170 },
-    BILLBOARD02:{  x:0, y:1683, w:215, h:220 },
-    BILLBOARD03:{  x:0, y:1908, w:230, h:220 },
-    BILLBOARD04:{  x:305, y:0, w:268, h:170 },
-    BILLBOARD05:{  x:305, y:175, w:298, h:190 },
-    BILLBOARD06:{  x:305, y:370, w:298, h:190 },
-    BILLBOARD07:{  x:305, y:565, w:298, h:190 },
-    BILLBOARD08:{  x:305, y:760, w:385, h:265 },
-    BILLBOARD09:{  x:305, y:1030, w:328, h:282 },
-    BOULDER1:{  x:305, y:1317, w:168, h:248 },
-    BOULDER2:{  x:305, y:1570, w:298, h:140 },
-    BOULDER3:{  x:305, y:1715, w:320, h:220 },
-    BUSH1:{  x:305, y:1940, w:240, h:155 },
-    BUSH2:{  x:695, y:0, w:232, h:152 },
-    CACTUS:{  x:695, y:157, w:235, h:118 },
-    CAR01:{  x:695, y:280, w:80, h:56 },
-    CAR02:{  x:695, y:341, w:80, h:59 },
-    CAR03:{  x:695, y:405, w:88, h:55 },
-    CAR04:{  x:695, y:465, w:80, h:57 },
-    COLUMN:{  x:695, y:527, w:200, h:315 },
-    DEAD_TREE1:{  x:695, y:847, w:135, h:332 },
-    DEAD_TREE2:{  x:695, y:1184, w:150, h:260 },
-    PALM_TREE:{  x:695, y:1449, w:215, h:540 },
-    PLAYER_LEFT:{  x:695, y:1994, w:80, h:41 },
-    PLAYER_RIGHT:{  x:1085, y:0, w:80, h:41 },
-    PLAYER_STRAIGHT:{  x:1085, y:46, w:80, h:41 },
-    PLAYER_UPHILL_LEFT:{  x:1085, y:92, w:80, h:45 },
-    PLAYER_UPHILL_RIGHT:{  x:1085, y:142, w:80, h:45 },
-    PLAYER_UPHILL_STRAIGHT:{  x:1085, y:192, w:80, h:45 },
-    SEMI:{  x:1085, y:242, w:122, h:144 },
-    STAR1:{  x:1085, y:391, w:200, h:200 },
-    STAR2:{  x:1085, y:596, w:200, h:200 },
-    STAR3:{  x:1085, y:801, w:200, h:200 },
-    STAR4:{  x:1085, y:1006, w:200, h:200 },
-    STUMP:{  x:1085, y:1211, w:195, h:140 },
-    TREE1:{  x:1085, y:1356, w:360, h:360 },
-    TREE2:{  x:1085, y:1721, w:282, h:295 },
-    TRUCK:{  x:1475, y:0, w:100, h:78 }
- */
 
 
 //SPRITES.SCALE = 0.3 * (1 / SPRITES.PLAYER_STRAIGHT.w) // the reference sprite width should be 1/3rd the (half-)roadWidth
 SPRITES.SCALE = 0.3 * (1 / SPRITES.PLAYER3.w); // the reference sprite width should be 1/3rd the (half-)roadWidth
 
-SPRITES.BILLBOARDS = [SPRITES.BILLBOARD01, SPRITES.BILLBOARD02, SPRITES.BILLBOARD03, SPRITES.BILLBOARD04, SPRITES.BILLBOARD05, SPRITES.BILLBOARD06, SPRITES.BILLBOARD07, SPRITES.BILLBOARD08, SPRITES.BILLBOARD09];
-SPRITES.PLANTS = [SPRITES.TREE1, SPRITES.TREE2, SPRITES.DEAD_TREE1, SPRITES.DEAD_TREE2, SPRITES.PALM_TREE, SPRITES.BUSH1, SPRITES.BUSH2, SPRITES.CACTUS, SPRITES.STUMP, SPRITES.BOULDER1, SPRITES.BOULDER2, SPRITES.BOULDER3];
+//SPRITES.BILLBOARDS = [SPRITES.BILLBOARD01, SPRITES.BILLBOARD02, SPRITES.BILLBOARD03, SPRITES.BILLBOARD04, SPRITES.BILLBOARD05, SPRITES.BILLBOARD06, SPRITES.BILLBOARD07, SPRITES.BILLBOARD08, SPRITES.BILLBOARD09];
+SPRITES.SEEDS = [SPRITES.SEEDS1, SPRITES.SEEDS2, SPRITES.SEEDS3, SPRITES.SEEDS4, SPRITES.SEEDS5, SPRITES.SEEDS6, SPRITES.SEEDS7, SPRITES.SEEDS8, SPRITES.SEEDS9 ];
+SPRITES.PLANTS = [SPRITES.TULIPIFERA, SPRITES.TREE3, SPRITES.HICKORY, SPRITES.JAPMAPLE, SPRITES.SHRUB1, SPRITES.JUNIPER, SPRITES.HILL1, SPRITES.HILL2, SPRITES.ROCKS2];
+//SPRITES.PLANTS = [SPRITES.TREE1, SPRITES.TREE2, SPRITES.DEAD_TREE1, SPRITES.DEAD_TREE2, SPRITES.PALM_TREE, SPRITES.BUSH1, SPRITES.BUSH2, SPRITES.CACTUS, SPRITES.STUMP, SPRITES.BOULDER1, SPRITES.BOULDER2, SPRITES.BOULDER3];
 //SPRITES.CARS = [SPRITES.CAR01, SPRITES.CAR02, SPRITES.CAR03, SPRITES.CAR04, SPRITES.SEMI, SPRITES.TRUCK];
 SPRITES.CARS = [SPRITES.OTHER1, SPRITES.OTHER2, SPRITES.OTHER3, SPRITES.OTHER4, SPRITES.OTHER5];
 SPRITES.STARS = [SPRITES.ASTEROID1, SPRITES.STAR1, SPRITES.STAR2, SPRITES.STAR3, SPRITES.STAR4, SPRITES.STAR1, SPRITES.STAR2, SPRITES.STAR3, SPRITES.STAR4];
-SPRITES.BOULDERS = [SPRITES.BOULDER1, SPRITES.BOULDER2, SPRITES.BOULDER3];
+//SPRITES.BOULDERS = [SPRITES.BOULDER1, SPRITES.BOULDER2, SPRITES.BOULDER3];
+SPRITES.DESERT = [SPRITES.AGAVE, SPRITES.AYERSROCK, SPRITES.CACTUS, SPRITES.ROCKS1, SPRITES.YUCCA, SPRITES.AGAVE, SPRITES.AGAVE, SPRITES.AGAVE, SPRITES.ROCKS1, SPRITES.YUCCA, SPRITES.YUCCA, SPRITES.YUCCA, SPRITES.YUCCA ];
+SPRITES.WATER = [SPRITES.SHOAL, SPRITES.SHOAL, SPRITES.ISLE_MANGROVE, SPRITES.ISLE_PALM, SPRITES.ISLE_PALM2, SPRITES.ISLE_PALM2];
 

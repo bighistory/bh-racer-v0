@@ -83,9 +83,9 @@
     <div id="hud">
         <span id="speed" class="hud">Speed: <span id="speed_value" class="value">0</span>%</span>
         <span id="km_remaining" class="hud">Km to go: <span id="km_remaining_value" class="value">0.0</span></span>
-        <span id="current_lap_time" class="hud">Time: <span id="current_lap_time_value" class="value">0.0</span></span>
-        <span id="last_lap_time" class="hud">Last lap: <span id="last_lap_time_value" class="value">0.0</span></span>
-        <span id="fast_lap_time" class="hud">Timescale: <span id="fast_lap_time_value" class="value">0.0</span></span>
+        <span id="current_lap_time" class="hud">Seeds collected: <span id="current_lap_time_value" class="value"></span></span>
+        <span id="fast_lap_time" class="hud">Scale: <span id="fast_lap_time_value" class="value">0.0</span></span>
+        <span id="last_lap_time" class="hud">Time: <span id="last_lap_time_value" class="value">0.0</span></span>
     </div>
     <!--div id="rotationFrame"-->
     <canvas id="canvas">
@@ -183,10 +183,13 @@ var breaking = -maxSpeed;               // deceleration rate when braking
 var decel = -maxSpeed / 5;             // 'natural' deceleration rate when neither accelerating, nor braking
 var offRoadDecel = -maxSpeed / 2;             // off road deceleration is somewhere in between
 var offRoadLimit = maxSpeed / 4;             // limit when off road deceleration no longer applies (e.g. you can always go at least this speed even when off road)
-var totalCars = 200;                     // total number of cars on the road
+var totalCars = 50;                     // total number of cars on the road
 var currentLapTime = 0;                       // current lap time
 var lastLapTime = null;                    // last lap time
 var currentRotation = 0; //horizon tilt
+
+var seedsObtained = 0;
+var seedsTotal = 0;
 
 var circles = [];   // used for explosions
 var circleCount = 500; // decreased if we're in lowres mode
@@ -229,7 +232,7 @@ timeScales.push( // timeScale 2 - desert world, no road, sandy ground
         bg1Speed: 0.0005,       // background layer scroll speed when going around curve (or up hill)
         bg1Offset: 0,           // current scroll offset for background 1
         allowRotate: true,
-        timeMarkerColor: '#FFFF00',
+        timeMarkerColor:  '#FACC2E',
         roadType: 0,             // how to draw road - 0 don't, 1 indiv segments, 2 big polygon
         groundColor: COLORS.LIGHT.road
     });
@@ -238,7 +241,7 @@ timeScales.push( // timeScale 3 - water world, no road, blue "ground"
         bg1Speed: 0.0005,       // background layer scroll speed when going around curve (or up hill)
         bg1Offset: 0,           // current scroll offset for background 1
         allowRotate: false,
-        timeMarkerColor: '#FFFF00',
+        timeMarkerColor: '#FACC2E',
         roadType: 0,             // how to draw road - 0 don't, 1 indiv segments, 2 big polygon
         groundColor: '#0077aa'
     });
@@ -260,9 +263,9 @@ for (var n = 4; n < 9; n++) { // timeScale 4-8 - regular world
         });
 
 }
-var timeScale = 3;
+var timeScale = 4;
 var currentTimeScale = null;
-chgTimeScale();
+chgTimeScale(1);
 var timeScaleJump = 0; // alpha value used to display explosion when we jump timescales
 var timeSpacing = 500; // number of segments between successive timeScale Markers
 var timeStart = 35; // number of segments from start to display "today"
@@ -372,6 +375,8 @@ function update(dt) {
     var playerW = SPRITES.PLAYER3.w * SPRITES.SCALE;
     var speedPercent = speed / maxSpeed;
     var dx = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
+    // test slipperyness
+    dx = dx * centrifugal/.15;
     var startPosition = position;
 
     //updateHud('fast_lap_time',playerSegment.p1.world.y); // test
@@ -419,6 +424,10 @@ function update(dt) {
      }
      */
 
+    //if current segment includes a timemarker update the hud to show it
+    if (playerSegment.timeMarker)
+        updateHud('last_lap_time',timeMarkerVal(timeScale, playerSegment.timeMarker)); // test
+        //Dom.show('last_lap_time');
 
     // new test for onroad sprite collision
     for (n = 0; n < playerSegment.sprites.length; n++) { //need to chg to use special array for stationary sprites that excludes off-road ones
@@ -430,54 +439,88 @@ function update(dt) {
             var spriteX = sprite.offset;//+ spriteW/2;
             //updateHud('fast_lap_time',playerX+","+ playerW+","+ spriteX +","+ spriteW+","+ sprite.source.w+","+ SPRITES.SCALE); // test
             if (Util.overlap(playerX, playerW, spriteX, spriteW, .8)) {
-                // if we're leaning around a corner when we hit, reset the horizon tilt
-                if (currentRotation != 0) {
-                    ctx.translate(canvas.width / 2, canvas.height / 2);
-                    ctx.rotate(currentRotation * (Math.PI / 90));
-                    ctx.translate(-canvas.width / 2, -canvas.height / 2);
-                    currentRotation = 0;
-                }
+                //if (sprite.spriteType && currentRotation != 0) {
+                if (sprite.timeJump) {
+                    // if we're leaning around a corner when we hit a timejump, reset the horizon tilt
+                    if (currentRotation != 0) {
+                        ctx.translate(canvas.width / 2, canvas.height / 2);
+                        ctx.rotate(currentRotation * (Math.PI / 90));
+                        ctx.translate(-canvas.width / 2, -canvas.height / 2);
+                        currentRotation = 0;
+                    }
 
-                // try out an explosion of sorts
-                //circles = baseCircles.slice(0);
-                if (timeScaleJump <= 0) { //time scale jump
-                    timeScaleJump = .98;
+                    // try out an explosion of sorts
+                    //circles = baseCircles.slice(0);
+                    if (timeScaleJump <= 0) { //time scale jump
+                        timeScaleJump = .98;
 
-                    // use circles for low-res, fragments (sprites) otherwise
-                    if (width == 480) {
+                        // use circles for low-res, fragments (sprites) otherwise
+                        if (width == 480) {
+                            circles = [];
+                            //noinspection JSDuplicatedDeclaration
+                            for (var i = 0; i < circleCount; i++) {
+                                //circles.push(new createCircle(false,10,300,.98));
+                                //circles.push(new createCircle(true, (1-(i/circleCount))));
+                                //noinspection JSPotentiallyInvalidConstructorUsage
+                                circles.push(new createCircle());
+                            }
+                        } else {
+                            fragments = [];
+                            for (var j = 0; j < fragmentCount; j++) {
+                                //noinspection JSPotentiallyInvalidConstructorUsage
+                                fragments.push(new createFragment());
+                            }
+                        }
+
+                        //timeScale = Util.randomInt(0,8);
+                        //if (sprite.offset > 0) { // hit billboard on right side of road, increase timescale
+                        //    chgTimeScale(1);
+                        //} else { // hit billboard on left side, decrease timescale
+                        //    chgTimeScale(-1);
+                        //}
+
+
+                        chgTimeScale(sprite.timeJump);
+
+                        // change total cars count to change world
+                        //window.setTimeout(reduceCars, 250);
+                        reduceCars();
+
+                        // randomly change timescale
+                        //timeScale = Util.randomInt(0,8);
+                        // change total cars count to change world
+                        //window.setTimeout(reduceCars, 750);
+                        //totalCars = totalCars-1;
+                        //resetRoad();
+
+                    }
+                } else if (sprite.seedSprite) { // create flash when hitting seed, remove seed sprite from segment
+                    //noinspection JSDuplicatedDeclaration
+                    var seedFlash = circleCount/10;
+                    //if (width == 480) {
                         circles = [];
-                        //noinspection JSDuplicatedDeclaration
-                        for (var i = 0; i < circleCount; i++) {
+                        for (var i = 0; i < seedFlash; i++) {
                             //circles.push(new createCircle(false,10,300,.98));
                             //circles.push(new createCircle(true, (1-(i/circleCount))));
                             //noinspection JSPotentiallyInvalidConstructorUsage
                             circles.push(new createCircle());
                         }
-                    } else {
-                        fragments = [];
-                        for (var j = 0; j < fragmentCount; j++) {
-                            //noinspection JSPotentiallyInvalidConstructorUsage
-                            fragments.push(new createFragment());
-                        }
-                    }
+                    //} else {
+                    //    fragments = [];
+                    //    for (var j = 0; j < seedFlash; j++) {
+                    //        //noinspection JSPotentiallyInvalidConstructorUsage
+                    //        fragments.push(new createFragment());
+                    //    }
+                    //}
+                    playerSegment.sprites.splice(n, 1);
+                    seedsObtained++;
+                    updateHud('current_lap_time', seedsObtained + "/" + seedsTotal);
 
-                    //timeScale = Util.randomInt(0,8);
-                    if (sprite.offset > 0) { // hit billboard on right side of road, increase timescale
-                        chgTimeScale(1);
-                    } else { // hit billboard on left side, decrease timescale
-                        chgTimeScale(-1);
-                    }
-
-                    // change total cars count to change world
-                    //window.setTimeout(reduceCars, 250);
-                    reduceCars();
-
-                    // randomly change timescale
-                    //timeScale = Util.randomInt(0,8);
-                    // change total cars count to change world
-                    //window.setTimeout(reduceCars, 750);
-                    //totalCars = totalCars-1;
-                    //resetRoad();
+                    // test slipperyness
+                    if (seedsObtained == 3 || seedsObtained == 6 || seedsObtained == 9 || seedsObtained == 12 )
+                        centrifugal = 0.3;
+                    else
+                        centrifugal = 0.15;
 
                 }
                 break;
@@ -814,17 +857,17 @@ function render() {
                 //if ((timeScale < 2) && (segment.p2.screen.y >= segment.p1.screen.y)) {
 //					if (timeScale < 2) {
 //						// show underside of road ahead if we're in space
-//						segment.color = COLORS.DARK.road; //'#BAA378'; 
+//						segment.color = COLORS.DARK.road; //'#BAA378';
 //						if (segment.p1.camera.z < frontSegment) {
 //							segment.drawRoad = false;
-//						}	
-//						if  (segment.p2.screen.y < segment.p1.screen.y) {
-//							segment.color = COLORS.LIGHT.road; 
 //						}
-//						
-//						//ctx.fillStyle = '#444444'; //COLORS.DARK.road; //'#BAA378'; 
-//						//ctx.strokeStyle = '#444444'; //COLORS.DARK.road; //'#BAA378'; 
-//					} else { // don't show 
+//						if  (segment.p2.screen.y < segment.p1.screen.y) {
+//							segment.color = COLORS.LIGHT.road;
+//						}
+//
+//						//ctx.fillStyle = '#444444'; //COLORS.DARK.road; //'#BAA378';
+//						//ctx.strokeStyle = '#444444'; //COLORS.DARK.road; //'#BAA378';
+//					} else { // don't show
                 segment.drawRoad = false;
 //					}
 
@@ -919,7 +962,7 @@ function render() {
                     segment.fog,
                     segment.color);
 //                      segment.color,
-//											segment.p1.screen.scale, 
+//											segment.p1.screen.scale,
 //											segment.timeMarker);
         }
 
@@ -1064,9 +1107,9 @@ function render() {
 
     // if any explosion remaining display it
     ctx.save();
-
+    //comment out resolution test - display circles and/or fragments, whatever exists in either array
     // low res uses circles
-    if (width == 480) {
+    //if (width == 480) {
 
         // this line causes firefox desktop 17.0.1 and 18beta to come to a crawl while circles are displayed
         //ctx.globalCompositeOperation = "lighter";
@@ -1092,7 +1135,7 @@ function render() {
                 circles.splice(j, 1);
             //		circles[j] = new create();
         }
-    } else {
+    //} else {
 
         //noinspection JSDuplicatedDeclaration
         for (var j = 0; j < fragments.length; j++) {
@@ -1113,7 +1156,7 @@ function render() {
                 fragments.splice(j, 1);
 
         }
-    }
+    //}
 
 
     if (timeScaleJump > 0) {
@@ -1154,16 +1197,19 @@ function addSegment(curve, y) {
     });
 }
 
-function addSprite(n, sprite, offset, offsety) {
+function addSprite(n, sprite, offset, offsety, spriteOptions) {
     // increase negative offsety parm to allow sprites to be positioned above the ground
     // ground level is effectively -1 but needs to be slightly less to prevent illusion of sprites floating so try -.97
     offsety = offsety || -.97;
-    var roadSprite = false;
+    spriteOptions = spriteOptions || {};
+    //offsety = offsety || -1;
+    var roadSprite = (offset > -1 && offset < 1);
+    var seedSprite = spriteOptions.seed || false;
+    var timeJump = spriteOptions.timejump || false;
     //if (offset > -1 && offset < 1)
     //    roadSprite = true;
-    if (offset > -1 && offset < 1)
-        roadSprite = true;
-    segments[n].sprites.push({ source:sprite, offset:offset, offsetY:offsety, roadSprite:roadSprite });
+    //segments[n].sprites.push({ source:sprite, offset:offset, offsetY:offsety, roadSprite:roadSprite });
+    segments[n].sprites.push({ source:sprite, offset:offset, offsetY:offsety, roadSprite:roadSprite, seedSprite:seedSprite, timeJump:timeJump });
 }
 
 function addRoad(enter, hold, leave, curve, y) {
@@ -1431,10 +1477,30 @@ function resetSprites() {
      addSprite(220, SPRITES.BILLBOARD05, .5);
      */
 
-    for (n = 900; n < (segments.length - 750); n += 1500) {
-        addSprite(n, SPRITES.BILLBOARD05, -.5);
-        addSprite(n + 750, SPRITES.BILLBOARD01, .5);
+    //for (n = 900; n < (segments.length - 750); n += 1500) {
+    //    addSprite(n, SPRITES.BILLBOARD05, -.5, -1, {timejump:true});
+    //    addSprite(n + 750, SPRITES.BILLBOARD01, .5, -1, {timejump:true});
+    //}
+
+    for (n = 900; n < segments.length; n += 900) {
+        if (Math.random()>=.85) {
+            addSprite(n, SPRITES.TIMEJUMPUP, Util.randomInt(-9,9)/10, -1, {timejump:1});
+        } else if (Math.random()<=.15) {
+            addSprite(n, SPRITES.TIMEJUMPDOWN, Util.randomInt(-9,9)/10, -1, {timejump:-1});
+        }
+
+        //addSprite(n + 500, Util.randomChoice(SPRITES.SEEDS), .2, -1, {seed:true});
     }
+
+    seedsObtained = 0;
+    seedsTotal = 0;
+    for (n = 500; n < segments.length; n += 500) {
+        addSprite(n, Util.randomChoice(SPRITES.SEEDS), Util.randomInt(-9,9)/10, -1, {seed:true});
+        seedsTotal++;
+        //addSprite(n + 500, Util.randomChoice(SPRITES.SEEDS), .2, -1, {seed:true});
+    }
+    updateHud('current_lap_time', "0/" + seedsTotal);
+
     /*
      addSprite(240,                  SPRITES.BILLBOARD07, -1.2);
      addSprite(240,                  SPRITES.BILLBOARD06,  2.2);
@@ -1458,8 +1524,8 @@ function resetSprites() {
         //addSprite(n, Util.randomChoice(SPRITES.PLANTS), Util.randomChoice([1,-1]) * (2 + Math.random() * 5));
         //addSprite(n, Util.randomChoice(SPRITES.PLANTS), Util.randomChoice([1,-1]) * (1 + Math.random() * 5));
         //var spr = (timeScale < 2)?SPRITES.BUSH2: (timeScale ==3)? Util.randomChoice(SPRITES.BOULDERS):Util.randomChoice(SPRITES.PLANTS);
-        var spr = (timeScale < 2) ? Util.randomChoice(SPRITES.STARS) : (timeScale == 3) ? Util.randomChoice(SPRITES.BOULDERS) : Util.randomChoice(SPRITES.PLANTS);
-        var offsetY = (timeScale < 2) ? Util.randomChoice([1, -1]) * Math.random() * 6 : 0;
+        var spr = (timeScale < 2) ? Util.randomChoice(SPRITES.STARS) : (timeScale == 2) ? Util.randomChoice(SPRITES.DESERT) : (timeScale == 3) ? Util.randomChoice(SPRITES.WATER) : Util.randomChoice(SPRITES.PLANTS);
+        var offsetY = (timeScale < 2) ? Util.randomChoice([1, -1]) * Math.random() * 6 : spr.oy? spr.oy : -.97;
         addSprite(n, spr, Util.randomChoice([1, -1]) * (1 + Math.random() * 5), offsetY);
     }
 

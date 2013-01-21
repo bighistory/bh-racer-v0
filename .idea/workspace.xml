@@ -2,9 +2,62 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0164586-060c-47e1-876d-243a78252283" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\NGC_6946and6939MosaicFinalFB.jpeg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\Star-field-3.jpeg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\background.svg" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\background.zip" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\background2.zip" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\galaxy.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\galaxy1.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\galaxy2.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\galaxy2.psd" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\galaxy3.psd" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills1.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills2.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills2.psd" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills2.tif" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills3.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\homepage2.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hs200931afulltop.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\sky.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\sky1.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\sky2.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\sky2.psd" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\sky3.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\trees.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\trees1.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\trees2.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\trees2.psd" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\trees3.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard02.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard03.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard04.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard06.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard07.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard08.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard09.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\boulder1.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\boulder2.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\boulder3.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\bush1.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\bush2.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\dead_tree1.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\dead_tree2.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\palm_tree.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\stump.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\tree1.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\tree2.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\~CSS Sprite Generator - Project Fondue.url" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\~readme.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\~sprites.zip" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/background.png" afterPath="$PROJECT_DIR$/images/background.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/sprites.png" afterPath="$PROJECT_DIR$/images/sprites.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/sprites/cactus.png" afterPath="$PROJECT_DIR$/images/sprites/cactus.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common.css" afterPath="$PROJECT_DIR$/common.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common.js" afterPath="$PROJECT_DIR$/common.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stats.js" afterPath="$PROJECT_DIR$/stats.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v4.final.html" afterPath="$PROJECT_DIR$/v4.final.html" />
     </list>
     <ignored path="bh-racer-v0.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,70 +76,26 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="vertical" split-proportion="0.8917431">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="v4.final.html" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/v4.final.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="138" column="9" selection-start="5991" selection-end="5996" vertical-scroll-proportion="-11.807693">
-                  <folding>
-                    <marker date="1358226701599" expanded="true" signature="17600:17677" placeholder="{...}" />
-                    <marker date="1358226701599" expanded="true" signature="20065:20687" placeholder="/*...*/" />
-                    <marker date="1358226701599" expanded="true" signature="22811:23277" placeholder="/*...*/" />
-                    <marker date="1358226701599" expanded="true" signature="49341:50275" placeholder="/*...*/" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="common.js" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/common.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="771" column="6" selection-start="30938" selection-end="30938" vertical-scroll-proportion="0.6785714">
-                  <folding>
-                    <element signature="n#!!doc" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="common.css" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/common.css">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="stats.js" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/stats.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="v4.final.html" pinned="false" current="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/v4.final.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="1069" column="0" selection-start="49342" selection-end="49342" vertical-scroll-proportion="17.0">
-                  <folding>
-                    <marker date="1358226701599" expanded="true" signature="49341:50275" placeholder="/*...*/" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="v4.final.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/v4.final.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="378" column="19" selection-start="17195" selection-end="17195" vertical-scroll-proportion="-2.6153846">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/common.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="811" column="32" selection-start="33225" selection-end="33225" vertical-scroll-proportion="0.029462738">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -102,10 +111,10 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/v4.final.html" />
-        <option value="$PROJECT_DIR$/common.css" />
         <option value="$PROJECT_DIR$/stats.js" />
+        <option value="$PROJECT_DIR$/v4.final.html" />
         <option value="$PROJECT_DIR$/common.js" />
+        <option value="$PROJECT_DIR$/common.css" />
       </list>
     </option>
   </component>
@@ -166,7 +175,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -187,12 +195,13 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="options.lastSelected" value="editor.preferences.appearance" />
+    <property name="options.lastSelected" value="reference.settings.ide.settings.notifications" />
     <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Big History/tools and tech/javascript racer original" />
     <property name="options.searchVisible" value="true" />
@@ -287,7 +296,11 @@
       <created>1358185588232</created>
       <updated>1358185588232</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="unblur and reduce background size, works well on chrome and firefox (desktop and android tablet) now">
+      <created>1358316213720</created>
+      <updated>1358316213720</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -316,10 +329,9 @@
     <layout>
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12820514" sideWeight="0.21847826" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15519568" sideWeight="0.67065215" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12820514" sideWeight="0.4445652" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.4972973" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.49797297" order="7" side_tool="true" content_ui="tabs" />
@@ -328,6 +340,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -369,7 +382,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix timescale calc" />
+    <option name="LAST_COMMIT_MESSAGE" value="unblur and reduce background size, works well on chrome and firefox (desktop and android tablet) now" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -384,48 +397,79 @@
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="initial commit" />
     <MESSAGE value="fix timescale calc" />
+    <MESSAGE value="unblur and reduce background size, works well on chrome and firefox (desktop and android tablet) now" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/v4.final.html</url>
-          <line>1248</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/v4.final.html</url>
-          <line>1347</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint enabled="true" type="javascript-exception">
           <properties />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="15" />
+      <option name="time" value="16" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="608" column="24" selection-start="24063" selection-end="24063" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stats.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="813" column="39" selection-start="32634" selection-end="32634" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v4.final.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1459" column="86" selection-start="64006" selection-end="64006" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v4.final.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1459" column="86" selection-start="64006" selection-end="64006" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="845" column="0" selection-start="34619" selection-end="34619" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/v4.final.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1563" column="15" selection-start="68254" selection-end="68255" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1358226701599" expanded="true" signature="17600:17677" placeholder="{...}" />
-            <marker date="1358226701599" expanded="true" signature="20065:20687" placeholder="/*...*/" />
-            <marker date="1358226701599" expanded="true" signature="22811:23277" placeholder="/*...*/" />
-            <marker date="1358226701599" expanded="true" signature="49341:50275" placeholder="/*...*/" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="655" column="37" selection-start="26570" selection-end="26570" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -439,56 +483,42 @@
     <entry file="file://$PROJECT_DIR$/common.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="528" column="33" selection-start="20648" selection-end="20648" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v4.final.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1343" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1358226701599" expanded="true" signature="17600:17677" placeholder="{...}" />
-            <marker date="1358226701599" expanded="true" signature="20065:20687" placeholder="/*...*/" />
-            <marker date="1358226701599" expanded="true" signature="22811:23277" placeholder="/*...*/" />
-            <marker date="1358226701599" expanded="true" signature="49341:50275" placeholder="/*...*/" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common.css">
+    <entry file="file://$PROJECT_DIR$/stats.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="57" column="0" selection-start="2073" selection-end="2073" vertical-scroll-proportion="0.8252427">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v4.final.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="9" selection-start="5991" selection-end="5996" vertical-scroll-proportion="-11.807693">
-          <folding>
-            <marker date="1358226701599" expanded="true" signature="17600:17677" placeholder="{...}" />
-            <marker date="1358226701599" expanded="true" signature="20065:20687" placeholder="/*...*/" />
-            <marker date="1358226701599" expanded="true" signature="22811:23277" placeholder="/*...*/" />
-            <marker date="1358226701599" expanded="true" signature="49341:50275" placeholder="/*...*/" />
-          </folding>
+        <state line="378" column="19" selection-start="17195" selection-end="17195" vertical-scroll-proportion="-2.6153846">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stats.js">
+    <entry file="file://$PROJECT_DIR$/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+        <state line="21" column="37" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.40568182">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="771" column="6" selection-start="30938" selection-end="30938" vertical-scroll-proportion="0.6785714">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="811" column="32" selection-start="33225" selection-end="33225" vertical-scroll-proportion="0.029462738">
+          <folding />
         </state>
       </provider>
     </entry>
