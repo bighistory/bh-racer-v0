@@ -233,6 +233,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
             var doLeftEnd = function (e) {
                 e.preventDefault();
                 keyLeft = false;
+                keyCount++;
             };
             var doFasterStart = function (e) {
                 e.preventDefault();
@@ -241,6 +242,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
             var doFasterEnd = function (e) {
                 e.preventDefault();
                 keyFaster = false;
+                keyCount++;
             };
             var doSlowerStart = function (e) {
                 e.preventDefault();
@@ -249,6 +251,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
             var doSlowerEnd = function (e) {
                 e.preventDefault();
                 keySlower = false;
+                keyCount++;
             };
             var doRightStart = function (e) {
                 e.preventDefault();
@@ -257,6 +260,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
             var doRightEnd = function (e) {
                 e.preventDefault();
                 keyRight = false;
+                keyCount++;
             };
             document.getElementById('left').addEventListener(startEvent, doLeftStart, false);
             document.getElementById('left').addEventListener(endEvent, doLeftEnd, false);

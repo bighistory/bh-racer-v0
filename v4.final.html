@@ -82,10 +82,11 @@
     <div id="frame"></div>
     <div id="hud">
         <span id="speed" class="hud">Speed: <span id="speed_value" class="value">0</span>%</span>
-        <span id="km_remaining" class="hud">Km to go: <span id="km_remaining_value" class="value">0.0</span></span>
-        <span id="current_lap_time" class="hud">Seeds collected: <span id="current_lap_time_value" class="value"></span></span>
-        <span id="fast_lap_time" class="hud">Scale: <span id="fast_lap_time_value" class="value">0.0</span></span>
-        <span id="last_lap_time" class="hud">Time: <span id="last_lap_time_value" class="value">0.0</span></span>
+        <span id="km_remaining" class="hud">Next stop: <span id="km_remaining_value" class="value">0</span></span>
+        <span id="smoothness" class="hud">EQ: <span id="smoothness_value" class="value">0</span></span>
+        <span id="seeds_collected" class="hud">Seeds: <span id="seeds_collected_value" class="value">0</span></span>
+        <span id="scale_factor" class="hud">Scale: <span id="scale_factor_value" class="value">0</span></span>
+        <span id="time_marker" class="hud"><span id="time_marker_value" class="value"></span></span>
     </div>
     <!--div id="rotationFrame"-->
     <canvas id="canvas">
@@ -202,12 +203,15 @@ var keyRight = false;
 var keyFaster = false;
 var keySlower = false;
 
+var keyCount = 0; // used to compute smoothness, based on number of keyup or touchup events per segment traveled (fewer jerky movements is better)
+
 var hud = {
     speed:{ value:null, dom:Dom.get('speed_value')            },
-    current_lap_time:{ value:null, dom:Dom.get('current_lap_time_value') },
+    smoothness:{ value:null, dom:Dom.get('smoothness_value')            },
+    seeds_collected:{ value:null, dom:Dom.get('seeds_collected_value') },
     km_remaining:{ value:null, dom:Dom.get('km_remaining_value')     },
-    last_lap_time:{ value:null, dom:Dom.get('last_lap_time_value')    },
-    fast_lap_time:{ value:null, dom:Dom.get('fast_lap_time_value')    }
+    time_marker:{ value:null, dom:Dom.get('time_marker_value')    },
+    scale_factor:{ value:null, dom:Dom.get('scale_factor_value')    }
 };
 
 var timeScales = [];
@@ -269,6 +273,7 @@ chgTimeScale(1);
 var timeScaleJump = 0; // alpha value used to display explosion when we jump timescales
 var timeSpacing = 500; // number of segments between successive timeScale Markers
 var timeStart = 35; // number of segments from start to display "today"
+
 
 //-------------------------------------------------------------------------
 function chgTimeScale(incr) {
@@ -376,14 +381,16 @@ function update(dt) {
     var speedPercent = speed / maxSpeed;
     var dx = dt * 2 * speedPercent; // at top speed, should be able to cross from left to right (-1 to 1) in 1 second
     // test slipperyness
-    dx = dx * centrifugal/.15;
+    //dx = dx * centrifugal/.15;
     var startPosition = position;
 
-    //updateHud('fast_lap_time',playerSegment.p1.world.y); // test
+    //updateHud('scale_factor',playerSegment.p1.world.y); // test
 
     updateCars(dt, playerSegment, playerW);
 
     position = Util.increase(position, dt * speed, trackLength);
+
+    updateHud('smoothness',Math.round(position/1000/keyCount)); // test
 
     //if (!autoSteer) {
     if (keyLeft)
@@ -426,8 +433,8 @@ function update(dt) {
 
     //if current segment includes a timemarker update the hud to show it
     if (playerSegment.timeMarker)
-        updateHud('last_lap_time',timeMarkerVal(timeScale, playerSegment.timeMarker)); // test
-        //Dom.show('last_lap_time');
+        updateHud('time_marker',timeMarkerVal(timeScale, playerSegment.timeMarker)); // test
+        //Dom.show('time_marker');
 
     // new test for onroad sprite collision
     for (n = 0; n < playerSegment.sprites.length; n++) { //need to chg to use special array for stationary sprites that excludes off-road ones
@@ -437,7 +444,7 @@ function update(dt) {
             //if (Util.overlap(playerX, playerW, sprite.offset + spriteW/2, spriteW, .8)) {
             //if (Util.overlap(playerX, playerW, sprite.offset + spriteW/2 * (sprite.offset > 0 ? 1 : -1), spriteW, .8)) {
             var spriteX = sprite.offset;//+ spriteW/2;
-            //updateHud('fast_lap_time',playerX+","+ playerW+","+ spriteX +","+ spriteW+","+ sprite.source.w+","+ SPRITES.SCALE); // test
+            //updateHud('scale_factor',playerX+","+ playerW+","+ spriteX +","+ spriteW+","+ sprite.source.w+","+ SPRITES.SCALE); // test
             if (Util.overlap(playerX, playerW, spriteX, spriteW, .8)) {
                 //if (sprite.spriteType && currentRotation != 0) {
                 if (sprite.timeJump) {
@@ -499,7 +506,7 @@ function update(dt) {
                     var seedFlash = circleCount/10;
                     //if (width == 480) {
                         circles = [];
-                        for (var i = 0; i < seedFlash; i++) {
+                        for (var k = 0; k < seedFlash; k++) {
                             //circles.push(new createCircle(false,10,300,.98));
                             //circles.push(new createCircle(true, (1-(i/circleCount))));
                             //noinspection JSPotentiallyInvalidConstructorUsage
@@ -514,13 +521,13 @@ function update(dt) {
                     //}
                     playerSegment.sprites.splice(n, 1);
                     seedsObtained++;
-                    updateHud('current_lap_time', seedsObtained + "/" + seedsTotal);
+                    updateHud('seeds_collected', seedsObtained + "/" + seedsTotal);
 
                     // test slipperyness
-                    if (seedsObtained == 3 || seedsObtained == 6 || seedsObtained == 9 || seedsObtained == 12 )
-                        centrifugal = 0.3;
-                    else
-                        centrifugal = 0.15;
+                    //if (seedsObtained == 3 || seedsObtained == 6 || seedsObtained == 9 || seedsObtained == 12 )
+                    //    centrifugal = 0.3;
+                    //else
+                    //    centrifugal = 0.15;
 
                 }
                 break;
@@ -572,7 +579,7 @@ function update(dt) {
 
     if (timeScaleJump > 0) {
         timeScaleJump -= dt / 2;
-        //updateHud('fast_lap_time',timeScaleJump); // test
+        //updateHud('scale_factor',timeScaleJump); // test
     }
 
     //playerX = Util.limit(playerX, -3, 3);     // dont ever let it go too far out of bounds
@@ -592,19 +599,19 @@ function update(dt) {
 //          lastLapTime    = currentLapTime;
 //          currentLapTime = 0;
             /*
-             if (lastLapTime <= Util.toFloat(Dom.storage.fast_lap_time)) {
-             Dom.storage.fast_lap_time = lastLapTime;
-             updateHud('fast_lap_time', formatTime(lastLapTime));
-             Dom.addClassName('fast_lap_time', 'fastest');
-             Dom.addClassName('last_lap_time', 'fastest');
+             if (lastLapTime <= Util.toFloat(Dom.storage.scale_factor)) {
+             Dom.storage.scale_factor = lastLapTime;
+             updateHud('scale_factor', formatTime(lastLapTime));
+             Dom.addClassName('scale_factor', 'fastest');
+             Dom.addClassName('time_marker', 'fastest');
              }
              else {
-             Dom.removeClassName('fast_lap_time', 'fastest');
-             Dom.removeClassName('last_lap_time', 'fastest');
+             Dom.removeClassName('scale_factor', 'fastest');
+             Dom.removeClassName('time_marker', 'fastest');
              }
              */
-//          updateHud('last_lap_time', formatTime(lastLapTime));
-//          Dom.show('last_lap_time');
+//          updateHud('time_marker', formatTime(lastLapTime));
+//          Dom.show('time_marker');
         }
         else {
             currentLapTime += dt;
@@ -613,9 +620,9 @@ function update(dt) {
 
 //      updateHud('speed',            5 * Math.round(speed/500));
     updateHud('speed', Math.round(5 * Math.round(speed / 500) / maxSpeed * 10000));
-//      updateHud('current_lap_time', formatTime(currentLapTime));
+//      updateHud('seeds_collected', formatTime(currentLapTime));
     updateHud('km_remaining', Math.floor((trackLength - position) / 20000));
-    updateHud('fast_lap_time', timeScale); // test
+    updateHud('scale_factor', timeScale); // test
 }
 
 //-------------------------------------------------------------------------
@@ -739,9 +746,9 @@ function render() {
 
     //NB: do we actually need to clearRect? we're redrawing a full background every time anyway
     //ctx.clearRect(0, 0, width, height);
-//updateHud('fast_lap_time', baseSegment.index + "/" + segments.length); // test
-//updateHud('fast_lap_time',currentRotation); // test
-//updateHud('fast_lap_time',timeScale); // test
+//updateHud('scale_factor', baseSegment.index + "/" + segments.length); // test
+//updateHud('scale_factor',currentRotation); // test
+//updateHud('scale_factor',timeScale); // test
 
 
 
@@ -749,7 +756,7 @@ function render() {
     if (bike && currentTimeScale.allowRotate) {
         var rotation = 0;
         //updateHud('km_remaining', baseSegment.curve); // test
-        //updateHud('fast_lap_time', currentRotation); // test
+        //updateHud('scale_factor', currentRotation); // test
         if (baseSegment.curve == 0) {
             //rotation=-currentRotation;
             currentRotation = 0;
@@ -758,7 +765,7 @@ function render() {
             //newrot = Math.round(baseSegment.curve * speed / maxSpeed * 1000) / 1000;
             // don't overrotate or we see the undrawn corner of canvas
             var newrot  = Util.limit(Math.round(baseSegment.curve * speed / maxSpeed * 1000) / 1000, -6, 6);
-            //updateHud('fast_lap_time', newrot); // test
+            //updateHud('scale_factor', newrot); // test
             rotation = newrot - currentRotation;
             currentRotation = newrot;
         }
@@ -1290,6 +1297,7 @@ function addDownhillToEnd(num) {
 function resetRoad() {
     segments = [];
     currentRotation = 0;
+    keyCount = 0;
 
 
     addStraight(ROAD.LENGTH.SHORT);
@@ -1499,7 +1507,7 @@ function resetSprites() {
         seedsTotal++;
         //addSprite(n + 500, Util.randomChoice(SPRITES.SEEDS), .2, -1, {seed:true});
     }
-    updateHud('current_lap_time', "0/" + seedsTotal);
+    updateHud('seeds_collected', "0/" + seedsTotal);
 
     /*
      addSprite(240,                  SPRITES.BILLBOARD07, -1.2);
@@ -1585,15 +1593,19 @@ Game.run({
         } },
         { keys:[KEY.LEFT, KEY.A], mode:'up', action:function () {
             keyLeft = false;
+            keyCount++;
         } },
         { keys:[KEY.RIGHT, KEY.D], mode:'up', action:function () {
             keyRight = false;
+            keyCount++;
         } },
         { keys:[KEY.UP, KEY.W], mode:'up', action:function () {
             keyFaster = false;
+            keyCount++;
         } },
         { keys:[KEY.DOWN, KEY.S], mode:'up', action:function () {
             keySlower = false;
+            keyCount++;
         } },
         { keys:[KEY.F], mode:'up', action:function () {
             Util.toggleFullscreen();
@@ -1605,8 +1617,8 @@ Game.run({
         sprites = images[1];
         reset();
         /*
-         Dom.storage.fast_lap_time = Dom.storage.fast_lap_time || 180;
-         updateHud('fast_lap_time', formatTime(Util.toFloat(Dom.storage.fast_lap_time)));
+         Dom.storage.scale_factor = Dom.storage.scale_factor || 180;
+         updateHud('scale_factor', formatTime(Util.toFloat(Dom.storage.scale_factor)));
          */
     }
 });

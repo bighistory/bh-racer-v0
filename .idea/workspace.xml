@@ -2,58 +2,56 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0164586-060c-47e1-876d-243a78252283" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\NGC_6946and6939MosaicFinalFB.jpeg" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\Star-field-3.jpeg" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\background.svg" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\background.zip" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\background2.zip" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\galaxy.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\galaxy1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\galaxy2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\galaxy2.psd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\galaxy3.psd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills2.psd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills2.tif" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hills3.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\homepage2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\hs200931afulltop.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\sky.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\sky1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\sky2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\sky2.psd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\sky3.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\trees.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\trees1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\trees2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\trees2.psd" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\background\trees3.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard02.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard03.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard04.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard06.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard07.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard08.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\billboard09.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\boulder1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\boulder2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\boulder3.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\bush1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\bush2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\dead_tree1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\dead_tree2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\palm_tree.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\stump.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\tree1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\tree2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\~CSS Sprite Generator - Project Fondue.url" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\~readme.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Emmanuel\Documents\bighistory.me codebase\bh-racer-v0\images\sprites\~sprites.zip" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/background.png" afterPath="$PROJECT_DIR$/images/background.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/sprites.png" afterPath="$PROJECT_DIR$/images/sprites.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/sprites/cactus.png" afterPath="$PROJECT_DIR$/images/sprites/cactus.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/background/hills3a.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/background/sky4.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/background/trees3a.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/dropfile/dropfile.xap" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/flashcanvas/flashcanvas.swf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/agave.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/ayersrock.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/hickory.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/hill1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/hill2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/isle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/isle_mangrove.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/isle_palm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/isle_palm2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/japmaple.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/juniper.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/palm2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/rocks1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/rocks2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/seeds1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/seeds2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/seeds3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/seeds4.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/seeds5.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/seeds6.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/seeds7.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/seeds8.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/seeds9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/shoal.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/shrub1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/timejumpdown.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/timejumpup.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/tree3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/tulipifera.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/sprites/yucca.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/bhsprites.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/css/stitches-0.5.18-min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/css/stitches-0.5.18.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/dropfile/dropfile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/flashcanvas/canvas2png.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/flashcanvas/flashcanvas.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/flashcanvas/proxy.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/flashcanvas/save.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/jquery-1.7.1.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/modernizr-2.0.6.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/stitches-0.5.18 - orig.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/stitches-0.5.18-min - orig.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/stitches-0.5.18.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/bhsprites/js/stitches.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/~readme.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common.css" afterPath="$PROJECT_DIR$/common.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common.js" afterPath="$PROJECT_DIR$/common.js" />
@@ -74,14 +72,20 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="ErrorTreeViewConfiguration">
+    <option name="autoscrollToSource" value="true" />
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="true" />
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="v4.final.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v4.final.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="378" column="19" selection-start="17195" selection-end="17195" vertical-scroll-proportion="-2.6153846">
-              <folding />
+            <state line="85" column="44" selection-start="3235" selection-end="3235" vertical-scroll-proportion="-1.6973684">
+              <folding>
+                <element signature="n#style#0;n#select#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -89,7 +93,7 @@
       <file leaf-file-name="common.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/common.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="811" column="32" selection-start="33225" selection-end="33225" vertical-scroll-proportion="0.029462738">
+            <state line="235" column="27" selection-start="8906" selection-end="8917" vertical-scroll-proportion="0.7071057">
               <folding />
             </state>
           </provider>
@@ -112,9 +116,9 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/stats.js" />
-        <option value="$PROJECT_DIR$/v4.final.html" />
-        <option value="$PROJECT_DIR$/common.js" />
         <option value="$PROJECT_DIR$/common.css" />
+        <option value="$PROJECT_DIR$/common.js" />
+        <option value="$PROJECT_DIR$/v4.final.html" />
       </list>
     </option>
   </component>
@@ -300,7 +304,11 @@
       <created>1358316213720</created>
       <updated>1358316213720</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="new spritesheet, added seeds, timejump sprites, slipperyness test">
+      <created>1358728790471</created>
+      <updated>1358728790472</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -324,14 +332,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="368" y="-8" width="1546" height="1090" extended-state="0" />
+    <frame x="368" y="-8" width="1546" height="1090" extended-state="1" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12820514" sideWeight="0.21847826" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12820514" sideWeight="0.67065215" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12820514" sideWeight="0.4445652" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12820514" sideWeight="0.4445652" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.4972973" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.49797297" order="7" side_tool="true" content_ui="tabs" />
@@ -341,7 +350,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -382,7 +390,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="unblur and reduce background size, works well on chrome and firefox (desktop and android tablet) now" />
+    <option name="LAST_COMMIT_MESSAGE" value="- commit graphics and other files&#10;- added smoothness (equanimity) test" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -398,6 +406,8 @@
     <MESSAGE value="initial commit" />
     <MESSAGE value="fix timescale calc" />
     <MESSAGE value="unblur and reduce background size, works well on chrome and firefox (desktop and android tablet) now" />
+    <MESSAGE value="new spritesheet, added seeds, timejump sprites, slipperyness test" />
+    <MESSAGE value="- commit graphics and other files&#10;- added smoothness (equanimity) test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -406,24 +416,10 @@
           <properties />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="16" />
+      <option name="time" value="19" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="608" column="24" selection-start="24063" selection-end="24063" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stats.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="813" column="39" selection-start="32634" selection-end="32634" vertical-scroll-proportion="0.0">
@@ -434,14 +430,18 @@
     <entry file="file://$PROJECT_DIR$/v4.final.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1459" column="86" selection-start="64006" selection-end="64006" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#select#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v4.final.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1459" column="86" selection-start="64006" selection-end="64006" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#select#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -462,7 +462,9 @@
     <entry file="file://$PROJECT_DIR$/v4.final.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1563" column="15" selection-start="68254" selection-end="68255" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#select#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -490,7 +492,9 @@
     <entry file="file://$PROJECT_DIR$/v4.final.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1343" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#select#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -501,23 +505,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v4.final.html">
+    <entry file="file://$PROJECT_DIR$/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="378" column="19" selection-start="17195" selection-end="17195" vertical-scroll-proportion="-2.6153846">
+        <state line="24" column="0" selection-start="1810" selection-end="1810" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common.css">
+    <entry file="file://$PROJECT_DIR$/v4.final.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="37" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.40568182">
-          <folding />
+        <state line="85" column="44" selection-start="3235" selection-end="3235" vertical-scroll-proportion="-1.6973684">
+          <folding>
+            <element signature="n#style#0;n#select#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/bhsprites/js/jquery-1.7.1.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="9849" selection-start="9902" selection-end="9902" vertical-scroll-proportion="0.029462738">
+          <folding>
+            <marker date="1327670100000" expanded="false" signature="17474:17505" placeholder="..." />
+            <marker date="1327670100000" expanded="false" signature="19981:20012" placeholder="..." />
+            <marker date="1327670100000" expanded="false" signature="20453:20463" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/bhsprites/js/dropfile/dropfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="212" column="41" selection-start="15724" selection-end="15724" vertical-scroll-proportion="0.33275563">
+          <folding>
+            <marker date="1327670100000" expanded="false" signature="6364:6386" placeholder="..." />
+            <marker date="1327670100000" expanded="false" signature="6442:6460" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/common.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="811" column="32" selection-start="33225" selection-end="33225" vertical-scroll-proportion="0.029462738">
+        <state line="235" column="27" selection-start="8906" selection-end="8917" vertical-scroll-proportion="0.7071057">
           <folding />
         </state>
       </provider>
