@@ -137,9 +137,6 @@ var centrifugal = 0.15;                     // centrifugal force multiplier when
 
 var segments = [];                      // array of road segments
 var cars = [];                      // array of cars on the road
-var seedSprites = [];    // array of seed sprites on the road
-var timeJumps = [];    // array of timejump sprites on the road
-
 var stats = Game.stats('fps');       // mr.doobs FPS counter
 var canvas = Dom.get('canvas');       // our canvas...
 //var canvasFrame = Dom.get('frame');       // our canvas...
@@ -187,7 +184,7 @@ var breaking = -maxSpeed;               // deceleration rate when braking
 var decel = -maxSpeed / 5;             // 'natural' deceleration rate when neither accelerating, nor braking
 var offRoadDecel = -maxSpeed / 2;             // off road deceleration is somewhere in between
 var offRoadLimit = maxSpeed / 4;             // limit when off road deceleration no longer applies (e.g. you can always go at least this speed even when off road)
-var totalCars = 30;                     // total number of cars on the road
+var totalCars = 50;                     // total number of cars on the road
 var currentLapTime = 0;                       // current lap time
 var lastLapTime = null;                    // last lap time
 var currentRotation = 0; //horizon tilt
@@ -276,7 +273,8 @@ chgTimeScale();
 var timeScaleJump = 0; // alpha value used to display explosion when we jump timescales
 var timeSpacing = 500; // number of segments between successive timeScale Markers
 var timeStart = 35; // number of segments from start to display "today"
-var timeBackward = true; // direction of travel (true means we're going back in time, false means returning to today)
+var timeForward = true; // normal mode is timeForward, reverses after we reach end node and turn around to return home
+
 
 //-------------------------------------------------------------------------
 function chgTimeScale(incr) {
@@ -378,7 +376,8 @@ function createFragment() {
 function update(dt) {
 
     var n, car, carW, sprite, spriteW;
-    var playerSegment = findSegment(position + playerZ);
+    //var playerSegment = findSegment(position + playerZ);
+    var playerSegment = findSegment(position + (playerZ * (timeForward?1:-1)));
     //var playerW = SPRITES.PLAYER_STRAIGHT.w * SPRITES.SCALE;
     var playerW = SPRITES.PLAYER3.w * SPRITES.SCALE;
     var speedPercent = speed / maxSpeed;
@@ -389,80 +388,26 @@ function update(dt) {
 
     //updateHud('scale_factor',playerSegment.p1.world.y); // test
 
-//    updateCars(dt, playerSegment, playerW);
-
-    //position = Util.increase(position, dt * speed, trackLength);
-    // remove looping, now reverse when we reach the end
-    position = Util.limit(position + dt * speed, 0, trackLength);
-    if (position == trackLength) {
-        //kill the gas if we're back home
-        if (!timeBackward) {
-            speed = 0;
-            Game.exit();
-        }
-
-        segments.reverse();
-        var seg;
-        // go thru and switch the segment geometry so we're now facing the other way
-        for (var n = 0; n < segments.length; n++) {
-            seg = segments[n];
-            seg.index = segments.length - seg.index;
-            savep1 = seg.p1;
-            seg.p1 = seg.p2;
-            seg.p2 = savep1;
-            //reverse the z coord
-            seg.p1.world.z = trackLength - seg.p1.world.z;
-            seg.p2.world.z = trackLength - seg.p2.world.z;
-            //seg.p1.world.x = -seg.p1.world.x;
-            //seg.p2.world.x = -seg.p2.world.x;
-            //p1:{ world:{ y:lastY(), z:n * segmentLength }, camera:{}, screen:{} },
-            //p2:{ world:{ y:y, z:(n + 1) * segmentLength }, camera:{}, screen:{} },
-            //curve:curve,
-            //sprites:[],
-            //cars:[],
-            //color:Math.floor(n / rumbleLength) % 2 ? COLORS.DARK : COLORS.LIGHT
-            seg.curve = -seg.curve;
-        }
-        // go thru and switch car indexes to reverse their direction
-        for (var n = 0; n < cars.length; n++) {
-            car = cars[n];
-            car.z = trackLength - car.z;
-            //oldSegment = findSegment(car.z);
-            //car.offset = car.offset + updateCarOffset(car, oldSegment, playerSegment, playerW);
-            //car.z = Util.increase(car.z, dt * car.speed, trackLength);
-            //car.percent = Util.percentRemaining(car.z, segmentLength); // useful for interpolation during rendering phase
-            //newSegment = findSegment(car.z);
-            //if (oldSegment != newSegment) {
-            //    var index = oldSegment.cars.indexOf(car);
-            //    oldSegment.cars.splice(index, 1);
-            //    newSegment.cars.push(car);
-            //}
-        }
-        // go thru and mirror the other onroad sprites
-        for (var n=0; n<seedSprites.length; n++) {
-            var spr = seedSprites[n];
-            spr.offset = -spr.offset;
-        }
-        for (var n=0; n<timeJumps.length; n++) {
-            var spr = timeJumps[n];
-            spr.offset = -spr.offset;
-        }
-
-        timeBackward = !timeBackward;
-        if (timeBackward)
-            ctx.textAlign = 'left';
-        else
-            ctx.textAlign = 'right';
-        startPosition = 0;
-        position = Util.limit(0 + dt * speed, 0, trackLength);
-        currentRotation = 0;
-        playerSegment = findSegment(playerZ);
-    }
-
-
     updateCars(dt, playerSegment, playerW);
 
-    updateHud('smoothness',Math.round(position/1000/keyCount*(timeBackward?1:2))); // test
+    //position = Util.increase(position, dt * speed, trackLength);
+
+    //remove looping, now we stop at the end of the road
+    position = Util.limit(position + (dt * speed * (timeForward?1:-1)), 0, trackLength);
+
+    /*var newPosition = Util.increase(position, dt * speed * timeForward?1:-1, trackLength);
+    if (timeForward && newPosition < position) { //this means we've reached the end, so flip around and start going backward
+        timeForward = !timeForward;
+        position = trackLength;
+    } else if (!timeForward && newPosition > position) { //this means we've reached the beginning, so flip around and start going forward
+        timeForward = !timeForward;
+        position = 1;
+    }  else {
+        position = newPosition;
+    }*/
+
+
+    updateHud('smoothness',Math.round(position/1000/keyCount)); // test
 
     //if (!autoSteer) {
     if (keyLeft)
@@ -516,7 +461,6 @@ function update(dt) {
             //if (Util.overlap(playerX, playerW, sprite.offset + spriteW/2, spriteW, .8)) {
             //if (Util.overlap(playerX, playerW, sprite.offset + spriteW/2 * (sprite.offset > 0 ? 1 : -1), spriteW, .8)) {
             var spriteX = sprite.offset;//+ spriteW/2;
-            //var spriteX = sprite.offset*(timeBackward?1:-1);
             //updateHud('scale_factor',playerX+","+ playerW+","+ spriteX +","+ spriteW+","+ sprite.source.w+","+ SPRITES.SCALE); // test
             if (Util.overlap(playerX, playerW, spriteX, spriteW, .8)) {
                 //if (sprite.spriteType && currentRotation != 0) {
@@ -615,7 +559,8 @@ function update(dt) {
         if (speed > car.speed) {
             if (Util.overlap(playerX, playerW, car.offset, carW, 0.8)) {
                 speed = car.speed * (car.speed / speed);
-                position = Util.increase(car.z, -playerZ, trackLength);
+                //position = Util.increase(car.z, -playerZ, trackLength);
+                position = Util.increase(car.z, -playerZ * (timeForward?1:-1), trackLength);
 
                 // if we're leaning around a corner when we hit, reset the horizon tilt
                 if (currentRotation != 0) {
@@ -659,16 +604,21 @@ function update(dt) {
     playerX = Util.limit(playerX, -.9, .9);     // dont ever let it go too far out of bounds
     speed = Util.limit(speed, 0, maxSpeed); // or exceed maxSpeed
 
-    currentTimeScale.bg1Offset = Util.increase(currentTimeScale.bg1Offset, currentTimeScale.bg1Speed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
-    currentTimeScale.bg2Offset = Util.increase(currentTimeScale.bg2Offset, currentTimeScale.bg2Speed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
-    currentTimeScale.bg3Offset = Util.increase(currentTimeScale.bg3Offset, currentTimeScale.bg3Speed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    //currentTimeScale.bg1Offset = Util.increase(currentTimeScale.bg1Offset, currentTimeScale.bg1Speed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    //currentTimeScale.bg2Offset = Util.increase(currentTimeScale.bg2Offset, currentTimeScale.bg2Speed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    //currentTimeScale.bg3Offset = Util.increase(currentTimeScale.bg3Offset, currentTimeScale.bg3Speed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
+    currentTimeScale.bg1Offset = Util.increase(currentTimeScale.bg1Offset, currentTimeScale.bg1Speed * playerSegment.curve * (position - startPosition * (timeForward?1:-1)) / segmentLength, 1);
+    currentTimeScale.bg2Offset = Util.increase(currentTimeScale.bg2Offset, currentTimeScale.bg2Speed * playerSegment.curve * (position - startPosition * (timeForward?1:-1)) / segmentLength, 1);
+    currentTimeScale.bg3Offset = Util.increase(currentTimeScale.bg3Offset, currentTimeScale.bg3Speed * playerSegment.curve * (position - startPosition * (timeForward?1:-1)) / segmentLength, 1);
+
     //skyOffset = Util.increase(skyOffset, skySpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
     //hillOffset = Util.increase(hillOffset, hillSpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
     //treeOffset = Util.increase(treeOffset, treeSpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
     //galaxyOffset = Util.increase(galaxyOffset, galaxySpeed * playerSegment.curve * (position - startPosition) / segmentLength, 1);
 
-    if (position > playerZ) {
-        if (currentLapTime && (startPosition < playerZ)) {
+    //if (position > playerZ) {
+    if ((timeForward && (position > playerZ)) || (!timeForward && (position < playerZ))) {
+//        if (currentLapTime && (startPosition < playerZ)) {
 //          lastLapTime    = currentLapTime;
 //          currentLapTime = 0;
             /*
@@ -685,16 +635,26 @@ function update(dt) {
              */
 //          updateHud('time_marker', formatTime(lastLapTime));
 //          Dom.show('time_marker');
-        }
-        else {
+//        }
+//        else {
             currentLapTime += dt;
-        }
+//        }
     }
+
+
+    //turn around if we've hit the end of the road
+    if ((timeForward && position == trackLength) || (!timeForward && position == 0)) {
+        timeForward = !timeForward;
+        playerZ = -playerZ;
+    }
+
 
 //      updateHud('speed',            5 * Math.round(speed/500));
     updateHud('speed', Math.round(5 * Math.round(speed / 500) / maxSpeed * 10000));
 //      updateHud('seeds_collected', formatTime(currentLapTime));
-    updateHud('km_remaining', Math.floor((trackLength - position) / 20000));
+    //updateHud('km_remaining', Math.floor((trackLength - position) / 20000));
+    updateHud('km_remaining', Math.floor((timeForward?(trackLength - position):position)/ 20000));
+
     updateHud('scale_factor', timeScale); // test
 }
 
@@ -805,8 +765,12 @@ function render() {
 
     var baseSegment = findSegment(position);
     var basePercent = Util.percentRemaining(position, segmentLength);
-    var playerSegment = findSegment(position + playerZ);
+    if (timeForward) basePercent = 1 - basePercent;
+    //var playerSegment = findSegment(position + playerZ);
+    var newPlayerSegIndex = position + playerZ * (timeForward?1:-1);
+    var playerSegment = findSegment(newPlayerSegIndex);
     var playerPercent = Util.percentRemaining(position + playerZ, segmentLength);
+    if (timeForward) playerPercent = 1 - playerPercent;
     var playerY = Util.interpolate(playerSegment.p1.world.y, playerSegment.p2.world.y, playerPercent);
     var maxy = height;
 
@@ -892,23 +856,24 @@ function render() {
 
     //efh horizon test - store array of segments to render later
     // no longer using segarray - set properties of segment objects to control display/color/etc
-    //var segarray = [];
+    // back to using segarray, this time as an array of indexes that we will use later to access actual segments in order (forward or backward)
+    var segarray = [];
     for (n = 0; n < drawDistance; n++) {
 
         //segment = segments[(baseSegment.index + n) % segments.length];
-        // remove looping, now we stop drawing when we reach the end
-        //var segIndex = Util.increase(baseSegment.index, n , segments.length);
-        segment = segments[Util.increase(baseSegment.index, n , segments.length)];
-        //* (timeBackward?1:-1)
+        var segIndex = Util.increase(baseSegment.index, n * (timeForward?1:-1), segments.length);
+        segment = segments[segIndex];
+        //removed looping in update function above
         //segment.looped = segment.index < baseSegment.index;
+        //now we just project forward or backward based on timeForward
+        segment.zDirection = timeForward?1:-1;
         segment.fog = Util.exponentialFog(n / drawDistance, fogDensity);
         segment.clip = maxy;
 
         //Util.project(segment.p1, (playerX * roadWidth) - x, playerY + cameraHeight, position - (segment.looped ? trackLength : 0), cameraDepth, width, height, roadWidth);
         //Util.project(segment.p2, (playerX * roadWidth) - x - dx, playerY + cameraHeight, position - (segment.looped ? trackLength : 0), cameraDepth, width, height, roadWidth);
-
-        Util.project(segment.p1, (playerX * roadWidth) - x, playerY + cameraHeight, position, cameraDepth, width, height, roadWidth);
-        Util.project(segment.p2, (playerX * roadWidth) - x - dx, playerY + cameraHeight, position, cameraDepth, width, height, roadWidth);
+        Util.project(segment.p1, (playerX * roadWidth) - x, playerY + cameraHeight, position * segment.zDirection, cameraDepth, width, height, roadWidth);
+        Util.project(segment.p2, (playerX * roadWidth) - x - dx, playerY + cameraHeight, position * segment.zDirection, cameraDepth, width, height, roadWidth);
 
         x = x + dx;
         dx = dx + segment.curve;
@@ -933,13 +898,20 @@ function render() {
             if  (segment.p2.screen.y < segment.p1.screen.y) {
                 segment.color = COLORS.LIGHT.road;
             }
-            if (segment.p1.camera.z < frontSegment) {
+            //if (segment.p1.camera.z < frontSegment) {
+            if (timeForward && segment.p1.camera.z < frontSegment) {
+                segment.drawRoad = false;
+            }
+            if (!timeForward && segment.p1.camera.z > frontSegment) {
                 segment.drawRoad = false;
             }
         } else {
-            if ((segment.p1.camera.z < cameraDepth) || // behind us
-                    (segment.p2.screen.y >= segment.p1.screen.y) || // back face cull
-                    (segment.p2.screen.y >= maxy)) {                // clip by (already rendered) hill
+            //if ((segment.p1.camera.z < cameraDepth) || // behind us
+            if ((timeForward && segment.p1.camera.z < cameraDepth) || // behind us
+                (!timeForward && segment.p1.camera.z > cameraDepth) || // behind us
+                (segment.p2.screen.y >= segment.p1.screen.y) || // back face cull
+                (segment.p2.screen.y >= maxy)) {                // clip by (already rendered) hill
+
                 //if ((timeScale < 2) && (segment.p2.screen.y >= segment.p1.screen.y)) {
 //					if (timeScale < 2) {
 //						// show underside of road ahead if we're in space
@@ -961,6 +933,11 @@ function render() {
                 maxy = segment.p1.screen.y;
             }
         }
+
+        // reintroducing segarray to control backward and forward directions
+        if (segment.drawRoad)
+            segarray.push(segment.index);
+
     }
 
     //efh horizon test - now that we know maxy, draw one large polygon for ground
@@ -1295,10 +1272,7 @@ function addSprite(n, sprite, offset, offsety, spriteOptions) {
     //if (offset > -1 && offset < 1)
     //    roadSprite = true;
     //segments[n].sprites.push({ source:sprite, offset:offset, offsetY:offsety, roadSprite:roadSprite });
-    var spr = { source:sprite, offset:offset, offsetY:offsety, roadSprite:roadSprite, seedSprite:seedSprite, timeJump:timeJump };
-    segments[n].sprites.push(spr);
-    if (seedSprite) seedSprites.push(spr);
-    if (timeJump) timeJumps.push(spr);
+    segments[n].sprites.push({ source:sprite, offset:offset, offsetY:offsety, roadSprite:roadSprite, seedSprite:seedSprite, timeJump:timeJump });
 }
 
 function addRoad(enter, hold, leave, curve, y) {
@@ -1383,9 +1357,9 @@ function resetRoad() {
 
 
     addStraight(ROAD.LENGTH.SHORT);
-    //for (n = 0; n < 2; n++) {
+    for (n = 0; n < 2; n++) {
         addCurve(ROAD.LENGTH.MEDIUM, -ROAD.CURVE.MEDIUM, -ROAD.HILL.MEDIUM);
-        addCurve(ROAD.LENGTH.MEDIUM, ROAD.CURVE.MEDIUM, ROAD.HILL.MEDIUM);
+        addCurve(ROAD.LENGTH.MEDIUM, -ROAD.CURVE.MEDIUM, -ROAD.HILL.MEDIUM);
         addLowRollingHills();
         if (Util.randomInt(0, 1) == 0) {
             addCurve(ROAD.LENGTH.LONG * 4, ROAD.CURVE.EASY, -ROAD.HILL.LOW);
@@ -1452,7 +1426,7 @@ function resetRoad() {
             addBumps();
             addHill(ROAD.LENGTH.LONG, ROAD.HILL.MEDIUM);
         }
-    //}
+    }
 
 
     addDownhillToEnd();

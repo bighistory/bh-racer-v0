@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d0164586-060c-47e1-876d-243a78252283" name="Default" comment="- commit graphics and other files&#10;- added smoothness (equanimity) test">
+    <list default="true" id="d0164586-060c-47e1-876d-243a78252283" name="Default" comment="finished time reversal code, including sprite movement">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/old &amp; temp versions/v4.final_test time reversal.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common.js" afterPath="$PROJECT_DIR$/common.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v4.final.html" afterPath="$PROJECT_DIR$/v4.final.html" />
@@ -31,7 +32,7 @@
       <file leaf-file-name="v4.final.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v4.final.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="416" column="0" selection-start="18960" selection-end="18960" vertical-scroll-proportion="0.10666667">
+            <state line="445" column="48" selection-start="20265" selection-end="20265" vertical-scroll-proportion="0.48820326">
               <folding>
                 <element signature="n#style#0;n#select#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -42,7 +43,7 @@
       <file leaf-file-name="common.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="539" column="45" selection-start="21031" selection-end="21031" vertical-scroll-proportion="0.0">
+            <state line="403" column="0" selection-start="15503" selection-end="15503" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -69,8 +70,8 @@
         <option value="$PROJECT_DIR$/stats.js" />
         <option value="$PROJECT_DIR$/common.css" />
         <option value="ssl.google-analytics.com/ga.js" />
-        <option value="$PROJECT_DIR$/v4.final.html" />
         <option value="$PROJECT_DIR$/common.js" />
+        <option value="$PROJECT_DIR$/v4.final.html" />
       </list>
     </option>
   </component>
@@ -243,7 +244,11 @@
       <created>1358818925064</created>
       <updated>1358818925064</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="- added time reversal instead of road looping, &#10;- mirror the segment geometry on return trip&#10;- when returning to today from the past, timemarkers are on left &#10;- still need to modify moving road sprite logic to handle reversing &amp; collission">
+      <created>1358971290939</created>
+      <updated>1358971290939</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -268,11 +273,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="359" y="-8" width="1546" height="1090" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12955466" sideWeight="0.67065215" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12820514" sideWeight="0.4445652" order="0" side_tool="false" content_ui="combo" />
@@ -284,7 +290,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -325,7 +330,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="- commit graphics and other files&#10;- added smoothness (equanimity) test" />
+    <option name="LAST_COMMIT_MESSAGE" value="- added time reversal instead of road looping, &#10;- mirror the segment geometry on return trip&#10;- when returning to today from the past, timemarkers are on left &#10;- still need to modify moving road sprite logic to handle reversing &amp; collission" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -343,6 +348,7 @@
     <MESSAGE value="unblur and reduce background size, works well on chrome and firefox (desktop and android tablet) now" />
     <MESSAGE value="new spritesheet, added seeds, timejump sprites, slipperyness test" />
     <MESSAGE value="- commit graphics and other files&#10;- added smoothness (equanimity) test" />
+    <MESSAGE value="- added time reversal instead of road looping, &#10;- mirror the segment geometry on return trip&#10;- when returning to today from the past, timemarkers are on left &#10;- still need to modify moving road sprite logic to handle reversing &amp; collission" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -474,7 +480,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/common.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="539" column="45" selection-start="21031" selection-end="21031" vertical-scroll-proportion="0.0">
+        <state line="403" column="0" selection-start="15503" selection-end="15503" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -483,7 +489,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v4.final.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="416" column="0" selection-start="18960" selection-end="18960" vertical-scroll-proportion="0.10666667">
+        <state line="445" column="48" selection-start="20265" selection-end="20265" vertical-scroll-proportion="0.48820326">
           <folding>
             <element signature="n#style#0;n#select#0;n#td#0;n#tr#1;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
